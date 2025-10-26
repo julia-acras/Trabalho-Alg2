@@ -87,7 +87,7 @@ void particao_mediana(int vetor[], int esq, int dir, int *pos_pivo)
     int i, j, pivo, meio;
 
     meio = esq + (dir - esq) / 2;
-    pivo = mediano(vetor[esq], vetor[meio], vetor[dir]);
+    pivo = mediana(vetor[esq], vetor[meio], vetor[dir]);
 
     if (pivo == vetor[meio])
     { 
