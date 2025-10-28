@@ -51,14 +51,14 @@ void Heapfy (int N, struct paciente V[])
 }
 
 int checaheap(struct paciente v[], int N){
-    int i=N;
-    for ( i=N;i>1;i--){
-        if (v[i].prioridade>v[i/2].prioridade)
-            return 0;}
+    for (int i = N - 1; i > 0; i--){
+        if (v[i].prioridade > v[i/2].prioridade)
+            return 0;
+    }
     return 1;
 }
 
-void RemoveHeap (int N, struct paciente V[], struct paciente p)
+/*void RemoveHeap (int N, struct paciente V[], struct paciente p)
 {
     int i; 
 
@@ -70,7 +70,7 @@ void RemoveHeap (int N, struct paciente V[], struct paciente p)
     (N)--;
 
     if (checaheap(V, N) == 0) Heapfy(N, V);
-}
+}*/
 
 
 
@@ -111,9 +111,73 @@ void HeapSort(struct paciente vetor[], int N) {
 
 
 void AlteraHeap(struct paciente vetor[], int posicao, int prioridade, int tam) {
+    printf("DEBUG: vetor=%p  tam=%d  posicao=%d\n", (void*)vetor, tam, posicao);
+
+    if (vetor == NULL) {
+        printf("ERRO: vetor NULL!\n");
+        return;
+    }
+    if (posicao < 0 || posicao >= tam) {
+        printf("ERRO: indice fora do limite!\n");
+        return;
+    }
+
+    printf("DEBUG: alterando prioridade de %s (antes %d) para %d\n",
+           vetor[posicao].nome, vetor[posicao].prioridade, prioridade);
+
     vetor[posicao].prioridade = prioridade;
-    if (!checaheap(tam, vetor)) 
+
+    if (!checaheap(vetor, tam))
         Heapfy(tam, vetor);
 }
 
 
+
+int main(void) {
+    printf("=== TESTE DO SEU HEAP DE PACIENTES ===\n");
+
+    // inicia heap com tamanho 5
+    int N = 5;
+    struct paciente *fila = InicHeap(N);
+    if (fila == NULL) {
+        printf("Erro ao alocar heap!\n");
+        return 1;
+    }
+
+    // preenche alguns pacientes
+    strcpy(fila[0].nome, "Ana");
+    fila[0].prioridade = 3;
+    strcpy(fila[1].nome, "Bruno");
+    fila[1].prioridade = 5;
+    strcpy(fila[2].nome, "Carlos");
+    fila[2].prioridade = 1;
+    strcpy(fila[3].nome, "Daniela");
+    fila[3].prioridade = 4;
+    strcpy(fila[4].nome, "Eduardo");
+    fila[4].prioridade = 2;
+
+    printf("\nHeap inicial:\n");
+    imprimeHeap(fila, N);
+
+    // testa AlteraHeap
+    printf("\nAlterando prioridade de Carlos para 6...\n");
+    AlteraHeap(fila, 2, 6, 5);
+    imprimeHeap(fila, N);
+
+    // testa HeapSort
+    printf("\nAplicando HeapSort...\n");
+    HeapSort(fila, N);
+    imprimeHeap(fila, N);
+
+    // testa RemoveHeap
+    //printf("\nRemovendo paciente Bruno (prio 5)...\n");
+    //struct paciente alvo;
+    //strcpy(alvo.nome, "Bruno");
+    //alvo.prioridade = 5;
+    //RemoveHeap(N, fila, alvo);
+    //imprimeHeap(fila, N - 1);
+
+    free(fila);
+    printf("\n=== FIM DO TESTE ===\n");
+    return 0;
+}
