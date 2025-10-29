@@ -7,17 +7,18 @@
     *InicHeap, InsereHeap, RemoveHeap, Heapfy, ChecaHeap, ImprimeHeap, HeapSort, AlteraHeap
 */
 
-/*Quando executar as funções Heapfy e HeapSort deve ser reportado o número de comparações e trocas 
-    de elemento de posição que foram executadas.
+/*Quando executar as funções Heapfy e HeapSort deve ser reportado 
+o número de comparações e trocas de elemento de posição que foram executadas.
 */
 
 long long comparacoes;
 long long trocas;
 
+/*Cada paciente tem cadastrado nome e prioridade.*/
 struct paciente
 {
     char nome[100];
-    int prioridade;
+    int prioridade
 };
 
 void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
@@ -52,6 +53,7 @@ void InsereHeap(int tam, struct paciente v[])
         comparacoes+=2;
         troca_pacientes(&v[i/2], &v[i]);
         trocas++;
+        i=i/2;
     }
 }
 

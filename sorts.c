@@ -1,6 +1,7 @@
 //Arquivo algoritmos de ordenação
 
 /*Implemente também os algoritmos de ordenação QuickSort e SelectSort. 
+
 Implemente o QuickSort usando como pivô o elemento que é a 
 mediana entre o primeiro, meio e último elementos do (sub-)vetor. 
 Faça uma opção no menu para gerar um vetor de números aleatórios com 
@@ -14,7 +15,7 @@ e trocas de elemento de lugar.*/
 long long comparacoes;
 long long trocas;
 
-//Função troca------------------------------------------------------
+/*---------------------Função de troca de inteiros--------------------*/
 void troca(int *a, int *b)
 {
     int aux;
@@ -22,75 +23,43 @@ void troca(int *a, int *b)
     *a = *b;
     *b = aux;
 }
-//------------------------------------------------------------------
-//Select Sort-------------------------------------------------------
-void select_sort(int tam, int vetor[]) 
+/*---------------------------------------------------------------------*/
+
+/*--------------------------Select Sort--------------------------------*/
+void SelectSort(int tam, int vetor[]) 
 {
   	int i, j, menor_elemento;
 
- 	for (i = 0 ; i < (n-1) ; i++) 
+ 	for (i = 1 ; i < tam; i++) 
     {
  		menor_elemento = i;
- 		for (j = i+1 ; j < n ; j++) 
+ 		for (j = i+1 ; j <= tam; j++) 
         {
 			comparacoes++; 
- 			if (vetor[j] < vetor[menor_elemento]) 
+ 			if (vetor[j] < vetor[menor_elemento])
                 menor_elemento = j;
  		}
  		troca(&vetor[menor_elemento], &vetor[i]);
 		trocas++;
  	}
 }
-//-------------------------------------------------------------------
+
+/*---------------------------------------------------------------------*/
 
 
-//Quick pivo sendo o primeiro---------------------------------
-void particao_primeiro_elemento(int vetor[], int esq, int dir, int pos_pivo)
+
+/*-------------------------Quick Sort (pivo mediana)-------------------*/
+int mediana(int a, int b, int c) 
 {
-    int i, j, pivo;
-    i = esq;
-    j = dir;
-    pivo = vetor[esq];
-
-    while (i < j)
-    {
-        while(vetor[i] <= pivo && i < dir)
-            i++;
-        while(vetor[j] > pivo)
-            j--;
-
-        if(i < j)
-        {
-            troca(&vetor[i], &vetor[j])
-        }
-    }
-    troca(&vetor[esq], &vetor[j]);
-    *pos_pivo = j;
-}
-
-void quick_sort_primeiro_elemento(int vetor[], int esq, int dir)
-{
-    int pos_pivo;
-    if(esq < dir)
-    {
-        particao_primeiro_elemento(vetor, esq, dir, &pos_pivo);
-        quick_sort_primeiro_elemento(vetor, esq, pos_pivo-1);
-        quick_sort_primeiro_elemento(vetor, pos_pivo+1, dir);
-    }
-}
-//------------------------------------------------------------------
-
-// Quick sort pivo sendo mediana -----------------------------------
-int mediana(int a, int b, int c)
-{
-    if ((a >= b && a <= c) || (a <= b && a >= c)) 
+    if ((a >= b && a <= c) || (a <= b && a >= c))
         return (a);
-    if ((b >= a && b <= c) || (b <= a && b >= c)) 
+    if ((b >= a && b <= c) || (b <= a && b >= c))
         return (b);
+
     return (c);
 }
 
-void particao_mediana(int vetor[], int esq, int dir, int *pos_pivo)
+void particao(int vetor[], int esq, int dir, int *pos_pivo)
 {   
     int i, j, pivo, meio;
 
@@ -98,12 +67,14 @@ void particao_mediana(int vetor[], int esq, int dir, int *pos_pivo)
     pivo = mediana(vetor[esq], vetor[meio], vetor[dir]);
 
     if (pivo == vetor[meio])
-    { 
+    {
+        comparacoes++;
         troca(&vetor[esq], &vetor[meio]);
         trocas++;
     }
     else if (pivo == vetor[dir]) 
-    {    
+    {   
+        comparacoes++;
         troca(&vetor[esq], &vetor[dir]);
         trocas++;
     }
@@ -116,74 +87,161 @@ void particao_mediana(int vetor[], int esq, int dir, int *pos_pivo)
         while (i < dir && vetor[i] <= pivo) 
         { 
             i++;
-            comparacoes++
+            comparacoes++;
         }
-        comparacoes++;
-
         while (j > esq && vetor[j]  > pivo) 
         {    
             j--;
             comparacoes++;
         }
         if (i < j)
-        {   
+        {
             troca(&vetor[i], &vetor[j]);
             trocas++;
         }
     }
 
     troca(&vetor[esq], &vetor[j]);
-    troca++;
+    trocas++;
     *pos_pivo = j;
 }
 
-void quick_sort_mediana(int vetor[], int esq, int dir)
+
+
+void QuickSort(int vetor[], int esq, int dir)
 {
     int pos_pivo;
     if(esq < dir)
     {
-        particao_mediana(vetor, esq, dir, &pos_pivo);
-        quick_sort_mediana(vetor, esq, pos_pivo-1);
-        quick_sort_mediana(vetor, pos_pivo+1, dir);
+        comparacoes++;
+        particao(vetor, esq, dir, &pos_pivo);
+        QuickSort(vetor, esq, pos_pivo-1);
+        QuickSort(vetor, pos_pivo+1, dir);
     }
 }
-//------------------------------------------------------------------
+/*---------------------------------------------------------------------*/
 
-//Quick com pivo sendo o ultimo-------------------------------------
-void particao_ultimo_elemento(int vector[], int esq, int dir, int pos_pivo) {
+/*-------------------------Funções para Heap Sort----------------------*/
+void InsereHeap(int tam, int v[])
+{
+    int i;
 
-    int i, j, pivo;
-    i = esq;
-    j = dir;
-    pivo = vetor[dir]; 
-
-	while (i < j)
+    i = tam;
+    while((i > 1) && (v[i/2]< v[i]))
     {
-        while (i < dir && vetor[i] <= pivo)
-            i++;
-        while (j > esq && vetor[j] > pivo)
-            j--;
+        comparacoes+=2;
+        troca(&v[i/2], &v[i]);
+        trocas++;
+        i=i/2;
+    }
+}
 
-        if (i < j)
+void Heapfy (int tam, int v[]) 
+{
+    int i;
+
+    for (i = 2; i <= tam; i++) 
+        InsereHeap(i, v);
+
+    //printf("Comparacoes no HeapFy: %d\n", comparacoes);
+    //printf("Trocas no Heapfy: %d\n", trocas);
+
+}
+
+void SacodeHeap(int tam, int v[]) 
+{
+    int i;
+    i = 2;
+
+    while (i <= tam) 
+    {
+        comparacoes++;
+        if (i < tam && v[i]< v[i+1])
         {
-            troca(&vetor[i], &vetor[j]);
+            i++;
+            comparacoes+=2; //se contar comparar i<j, mas acho q sao so indices do vetor
         }
-    }
 
-    troca(&vetor[dir], &vetor[i]);
-    *pos_pivo = i;
+        if (v[i/2] >= v[i])
+        { 
+            comparacoes++;
+            break;
+        }
+        
+        troca(&v[i/2], &v[i]);
+        trocas++;
+    }
 }
 
-void quick_sort_ultimo_elemento(int vetor[], int esq, int dir)
+void HeapSort(int tam, int v[]) 
 {
-    int pos_pivo;
-    if(esq < dir)
+    int i;
+
+    Heapfy(tam, v);
+    for (i = tam; i > 1; i--)
     {
-        particao_ultimo_elemento(vetor, esq, dir, &pos_pivo);
-        quick_sort_ultimo_elemento(vetor, esq, pos_pivo-1);
-        quick_sort_ultimo_elemento(vetor, pos_pivo+1, dir);
+        troca(&v[i], &v[1]);
+        trocas++;
+        SacodeHeap(i-1, v);
     }
 }
-//------------------------------------------------------------------
 
-//COLOCAR HEAP
+/*-----------------------Função imprime vetor--------------------------*/
+void ImprimeVetor(int tam, int v[])
+{
+    int i;
+
+    for(i = 1; i <= tam; i++)
+        printf("%d ", v[i]);
+    printf("\n");
+}
+/*---------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------*/
+long aleat (long min, long max)
+{
+  return((rand() % (max - min + 1)) + min);
+}
+
+void CriaVetor(int v[]) 
+{
+    int i; 
+
+	for (i = 1; i <= 1024 ; i++) 
+		v[i] = aleat(0,2048);
+}
+/*---------------------------------------------------------------------*/
+
+int main() {
+    int metodo, n = 1024;
+    int v[1024];
+    CriaVetor(v);
+    
+    printf("\nVetor original:\n");
+    ImprimeVetor(n, v);
+
+    printf("\nEscolha o método:\n");
+    printf("1 - Selection Sort\n");
+    printf("2 - Quick Sort\n");
+    printf("3 - Heap Sort\n");
+    printf("-> ");
+    scanf("%d", &metodo);
+
+    comparacoes = 0;
+    trocas = 0;
+
+    if (metodo == 1)
+        SelectSort(n, v);
+    else if (metodo == 2)
+        QuickSort(v, 1, n);
+    else if(metodo == 3)
+        HeapSort(n, v);
+
+    printf("\nVetor ordenado:\n");
+    ImprimeVetor(n, v);
+
+    printf("\nComparações: %lld\n", comparacoes);
+    printf("Trocas: %lld\n", trocas);
+
+    return (0);
+}
