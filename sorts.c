@@ -212,8 +212,11 @@ void CriaVetor(int v[])
 }
 /*---------------------------------------------------------------------*/
 
-int main() {
-    int metodo, n = 1024;
+int main() 
+{
+    int metodo, n;
+    
+    n = 1024;
     int v[1024];
     CriaVetor(v);
     
