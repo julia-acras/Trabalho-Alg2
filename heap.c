@@ -49,9 +49,9 @@ void InsereHeap(int tam, struct paciente v[])
     i = tam;
     while((i > 1) && (v[i/2].prioridade < v[i].prioridade))
     {
-        (comparacoes) += 2;
+        comparacoes+= 2;
         troca_pacientes(&v[i/2], &v[i]);
-        (trocas)++;
+        trocas++;
     }
 }
 
@@ -123,27 +123,27 @@ void SacodeHeap(int tam, struct paciente v[])
 
     while (i <= tam) 
     {
-        (comparacoes)++;
-        if (i < tam && v[i].prioridade < v[i + 1].prioridade)
+        comparacoes++;
+        if (i < tam && v[i].prioridade < v[i+1].prioridade)
         {
             i++;
-            (comparacoes)++;
+            comparacoes++;
         }
 
         if (v[i/2].prioridade >= v[i].prioridade)
         { 
-            (comparacoes)++;
+            comparacoes++;
             break;
         }
         
         troca_pacientes(&v[i/2], &v[i]);
-        (trocas)++;
+        trocas++;
     }
 }
 
 void HeapSort(int tam, struct paciente v[]) 
 {
-    int i, trocas;
+    int i;
 
     Heapfy(tam, v);
     for (i = tam; i > 1; i--) {
