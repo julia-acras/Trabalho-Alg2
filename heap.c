@@ -156,16 +156,6 @@ void AlteraHeap(int tam, struct paciente v[], int posicao, int prioridade)
     if (ChecaHeap(tam, v) == 0)
         Heapfy(tam, v);
 }
- //nao sei se pode :) mas foi o unico jeito q achei
-int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int cap) 
-{
-    if (*tam + 1 > cap) 
-        return(0);      // sem espaço (evite estouro)
-    (*tam) ++;
-    v[*tam] = novo;                    // põe no fim
-    InsereHeap(*tam, v);               // e sobe até o lugar certo
-    return(1);
-}
 
 //nao sei se pode :) mas foi o unico jeito q achei
 int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int capacidade_fila) 
