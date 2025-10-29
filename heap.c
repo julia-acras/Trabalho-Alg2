@@ -63,10 +63,6 @@ void Heapfy (int tam, struct paciente v[])
 
     for (i = 2; i <= tam; i++) 
         InsereHeap(i, v);
-
-    //printf("Comparacoes no HeapFy: %d\n", comparacoes);
-    //printf("Trocas no Heapfy: %d\n", trocas);
-
 }
 
 int ChecaHeap(int tam, struct paciente v[])
