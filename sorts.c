@@ -1,5 +1,13 @@
 //Arquivo algoritmos de ordenação
 
+/*Implemente também os algoritmos de ordenação QuickSort e SelectSort. 
+Implemente o QuickSort usando como pivô o elemento que é a 
+mediana entre o primeiro, meio e último elementos do (sub-)vetor. 
+Faça uma opção no menu para gerar um vetor de números aleatórios com 
+1024 elementos e mostre a comparação do HeapSort com o QuickSort e o SelectSort. 
+Qual foi melhor na prática? Para cada algoritmo mostre o número de comparações 
+e trocas de elemento de lugar.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
