@@ -18,7 +18,7 @@ long long trocas;
 struct paciente
 {
     char nome[100];
-    int prioridade
+    int prioridade;
 };
 
 void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
@@ -30,16 +30,13 @@ void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
     *paciente2 = aux;
 }
 
-struct paciente *InicHeap(int tam)
+void InicHeap(int tam, struct paciente v[]) 
 {
-    struct paciente *fila;
-
-    fila = malloc((tam+1) * sizeof(struct paciente));
-
-    if (fila == NULL)
-        return(NULL);
-
-    return(fila);
+    for (int i = 1; i <= tam; i++) 
+    {
+        strcpy(v[i].nome, "");
+        v[i].prioridade = 0;
+    }
 }
 
 
@@ -158,4 +155,48 @@ void AlteraHeap(int tam, struct paciente v[], int posicao, int prioridade)
 
     if (ChecaHeap(tam, v) == 0)
         Heapfy(tam, v);
+}
+
+//nao sei se pode :) mas foi o unico jeito q achei
+int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int cap) 
+{
+    if (*tam + 1 > cap) 
+        return(0);      // sem espaço (evite estouro)
+    (*tam) ++;
+    v[*tam] = novo;                    // põe no fim
+    InsereHeap(*tam, v);               // e sobe até o lugar certo
+    return(1);
+}
+
+
+int main()
+{
+    int tam;
+    tam = 3;
+    struct paciente fila[100];
+    InicHeap(tam, fila);
+    printf("testando heap\n");
+    fila[1].prioridade = 99;
+    fila[2].prioridade = 2;
+    fila[3].prioridade = 59;
+    strcpy(fila[1].nome, "julia");
+    strcpy(fila[2].nome, "duda");
+    strcpy(fila[3].nome, "elias");
+
+    HeapSort(tam, fila);
+    ImprimeHeap(tam, fila);
+    printf("\n");
+
+    struct paciente novo; //pensar jeito melhor - por causa do menu
+    novo.prioridade = 37;
+    strcpy(novo.nome, "isadora");
+    if(InserirPaciente(novo, fila, &tam, 100) == 1)
+        ImprimeHeap(tam, fila);
+    printf("\n");
+
+    AlteraHeap(tam, fila, 2, 56);
+
+    RemoveHeap(&tam, fila, fila[2]);
+    ImprimeHeap(tam, fila);
+    return(0);
 }
