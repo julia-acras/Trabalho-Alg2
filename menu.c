@@ -29,6 +29,7 @@ int main()
 	printf("Se você apertar alguma tecla errada, REINICIE O PROGRAMA!\n");
 	printf("\n");
 
+    /*---Escolha de qual caminho seguir---*/
     printf("Escolha qual caminho seguir:\n");
     printf("1 - Menu Pronto Socorro ""Heap or Quick\n");
     printf("2 - Ordenação de vetor com números aleatórios\n");
