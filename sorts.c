@@ -31,18 +31,21 @@ void SelectSort(int tam, int vetor[])
 {
   	int i, j, menor_elemento;
 
- 	for (i = 1 ; i < tam; i++) 
+ 	for (i = 1; i < tam; i++) 
     {
+        comparacoes++;
  		menor_elemento = i;
  		for (j = i+1 ; j <= tam; j++) 
         {
-			comparacoes++; 
+			comparacoes+=2; 
  			if (vetor[j] < vetor[menor_elemento])
                 menor_elemento = j;
  		}
  		troca(&vetor[menor_elemento], &vetor[i]);
 		trocas++;
  	}
+    if(i == tam)
+        comparacoes++;
 }
 /*---------------------------------------------------------------------*/
 
@@ -256,17 +259,17 @@ void CriaVetor(int v[])
 {
     int i; 
 
-	for (i = 1; i <= 1024 ; i++) 
+	for (i = 1; i <= 1024; i++) 
 		v[i] = aleat(0,2048);
 }
 /*---------------------------------------------------------------------*/
-/*
+
 int main() 
 {
     int metodo, n;
     
     n = 1024;
-    int v[1024];
+    int v[1025];
     CriaVetor(v);
     
     printf("\nVetor original:\n");
@@ -296,11 +299,11 @@ int main()
     printf("Trocas: %lld\n", trocas);
 
     return (0);
-} */
+}
 
 
 
-int main(){
+/*int main(){
     int caminho;
     printf("MENU PRONTO SOCORRO HEAP OR QUICK:\n");
     printf("\n");
@@ -325,4 +328,4 @@ int main(){
     }
 
     return 0;
-}
+}*/
