@@ -27,6 +27,9 @@ void troca(int *a, int *b)
 /*---------------------------------------------------------------------*/
 
 /*--------------------------Select Sort--------------------------------*/
+
+/*Complexidade = O(n^2)
+Trocas = n-1*/
 void SelectSort(int tam, int vetor[]) 
 {
   	int i, j, menor_elemento;
