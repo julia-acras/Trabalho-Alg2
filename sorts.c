@@ -260,7 +260,7 @@ void CriaVetor(int v[])
 		v[i] = aleat(0,2048);
 }
 /*---------------------------------------------------------------------*/
-
+/*
 int main() 
 {
     int metodo, n;
@@ -296,4 +296,33 @@ int main()
     printf("Trocas: %lld\n", trocas);
 
     return (0);
+} */
+
+
+
+int main(){
+    int caminho;
+    printf("MENU PRONTO SOCORRO HEAP OR QUICK:\n");
+    printf("\n");
+    printf("Escolha qual caminho seguir:\n");
+    printf("1 - Menu Pronto Socorro \"Heap or Quick\"\n");
+    printf("2 - Ordenação de vetor com números aleatórios\n");
+    printf(">>");
+    scanf("%d", &caminho);
+    printf("\n");
+
+    if (caminho == 1){
+        printf("Você entrou no menu do pronto socorro Heap or Quick.\n");
+    }
+    else if (caminho == 2){
+        printf("Você entrou na área de ordenação de vetor.\n");
+
+        const int N = 1024;
+        int base[1025];
+        srand((unsigned)time(NULL));  // aleatoriedade
+        CriaVetor(base);
+        compara_algoritmos(N, base);
+    }
+
+    return 0;
 }
