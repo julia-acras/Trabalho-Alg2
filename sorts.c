@@ -11,6 +11,7 @@ e trocas de elemento de lugar.*/
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 long long comparacoes;
 long long trocas;
@@ -191,7 +192,7 @@ void ImprimeVetor(int tam, int v[])
     int i;
 
     for(i = 1; i <= tam; i++)
-        printf("%d ", i, v[i]);
+        printf("%d ", v[i]);
     printf("\n");
 }
 /*---------------------------------------------------------------------*/
@@ -223,7 +224,6 @@ void compara_algoritmos(int n, const int base[]) {
     HeapSort(n, c);
     compH = comparacoes; trocH = trocas;
 
-    /* tabela*/
     printf("\n=== COMPARACAO (N=%d; mesmo vetor-base) ===\n", n);
     printf("%-10s | %15s | %12s | %s\n",
            "Metodo", "Comparacoes", "Trocas", "OK?");
@@ -242,7 +242,7 @@ void compara_algoritmos(int n, const int base[]) {
         melhor = "Heap";  mC = compH; mT = trocH;
     }
 
-    printf("\nMelhor na pratica (criterio: menos comparacoes; desempate por trocas): %s\n", melhor);
+    printf("\nMelhor na pratica: %s\n", melhor);
 }
 /*---------------------------------------------------------------------*/
 
