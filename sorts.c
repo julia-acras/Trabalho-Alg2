@@ -191,12 +191,62 @@ void ImprimeVetor(int tam, int v[])
     int i;
 
     for(i = 1; i <= tam; i++)
-        printf("%d ", v[i]);
+        printf("%d ", i, v[i]);
     printf("\n");
 }
 /*---------------------------------------------------------------------*/
 
+/*--------Função de Comparar Algoritmos--------------------------------*/
+void compara_algoritmos(int n, const int base[]) {
+
+    // cópias
+    int a[1025], b[1025], c[1025];
+
+    for (int i = 1; i <= n; i++) {
+        a[i] = base[i];
+        b[i] = base[i];
+        c[i] = base[i];
+    }
+    long long compS, trocS, compQ, trocQ, compH, trocH;
+    // --- Selection ---
+    comparacoes = 0; trocas = 0;
+    SelectSort(n, a);
+    compS = comparacoes; trocS = trocas;
+
+    // --- Quick ---
+    comparacoes = 0; trocas = 0;
+    QuickSort(b, 1, n);
+    compQ = comparacoes; trocQ = trocas;
+
+    // --- Heap ---
+    comparacoes = 0; trocas = 0;
+    HeapSort(n, c);
+    compH = comparacoes; trocH = trocas;
+
+    /* tabela*/
+    printf("\n=== COMPARACAO (N=%d; mesmo vetor-base) ===\n", n);
+    printf("%-10s | %15s | %12s | %s\n",
+           "Metodo", "Comparacoes", "Trocas", "OK?");
+    printf("-----------+-----------------+--------------+-----\n");
+    printf("%-10s | %15lld | %12lld\n", "Selection", compS, trocS);
+    printf("%-10s | %15lld | %12lld\n", "Quick",     compQ, trocQ);
+    printf("%-10s | %15lld | %12lld\n", "Heap",      compH, trocH);
+
+    const char* melhor = "Selection";
+    long long mC = compS, mT = trocS;
+
+    if (compQ < mC || (compQ == mC && trocQ < mT)) {
+        melhor = "Quick"; mC = compQ; mT = trocQ;
+    }
+    if (compH < mC || (compH == mC && trocH < mT)) {
+        melhor = "Heap";  mC = compH; mT = trocH;
+    }
+
+    printf("\nMelhor na pratica (criterio: menos comparacoes; desempate por trocas): %s\n", melhor);
+}
 /*---------------------------------------------------------------------*/
+
+/*-------------------Área de espaço para criar vetor-------------------*/
 long aleat (long min, long max)
 {
   return((rand() % (max - min + 1)) + min);
