@@ -21,6 +21,7 @@ e trocas de elemento de lugar.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "heap.h"
 
 long long comparacoes;
 long long trocas;
@@ -137,7 +138,7 @@ void QuickSort(int vetor[], int esq, int dir)
 /*---------------------------------------------------------------------*/
 
 /*-------------------------Funções para Heap Sort----------------------*/
-void InsereHeap(int tam, int v[])
+void InsereHeap_vetor(int tam, int v[])
 {
     int i;
 
@@ -151,19 +152,19 @@ void InsereHeap(int tam, int v[])
     }
 }
 
-void Heapfy (int tam, int v[]) 
+void Heapfy_vetor(int tam, int v[]) 
 {
     int i;
 
     for (i = 2; i <= tam; i++) 
-        InsereHeap(i, v);
+        InsereHeap_vetor(i, v);
 
     //printf("Comparacoes no HeapFy: %d\n", comparacoes);
     //printf("Trocas no Heapfy: %d\n", trocas);
 
 }
 
-void SacodeHeap(int tam, int v[]) 
+void SacodeHeap_vetor(int tam, int v[]) 
 {
     int i;
     i = 2;
@@ -189,21 +190,21 @@ void SacodeHeap(int tam, int v[])
     }
 }
 
-void HeapSort(int tam, int v[]) 
+void HeapSort_vetor(int tam, int v[]) 
 {
     int i;
 
-    Heapfy(tam, v);
+    Heapfy_vetor(tam, v);
     for (i = tam; i > 1; i--)
     {
         troca(&v[i], &v[1]);
         trocas++;
-        SacodeHeap(i-1, v);
+        SacodeHeap_vetor(i-1, v);
     }
 }
 
 /*-----------------------Função imprime vetor--------------------------*/
-void ImprimeVetor(int tam, int v[])
+void ImprimeVetor_vetor(int tam, int v[])
 {
     int i;
 
@@ -214,7 +215,7 @@ void ImprimeVetor(int tam, int v[])
 /*---------------------------------------------------------------------*/
 
 /*-------------------Área de espaço para criar vetor-------------------*/
-long aleat (long min, long max)
+long aleat(long min, long max)
 {
   return((rand() % (max - min + 1)) + min);
 }
@@ -241,9 +242,164 @@ void GeraCopias(int base[], int tam, int copia_heap[], int copia_quick[], int co
 }
 /*---------------------------------------------------------------------*/
 
+/*----------------------------Heap-------------------------------------*/
+void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
+{
+    struct paciente aux;
+    
+    aux = *paciente1;
+    *paciente1 = *paciente2;
+    *paciente2 = aux;
+}
+
+void InicHeap(int tam, struct paciente v[]) 
+{
+    for (int i = 1; i <= tam; i++) 
+    {
+        strcpy(v[i].nome, "");
+        v[i].prioridade = 0;
+    }
+}
+
+
+void InsereHeap(int tam, struct paciente v[])
+{
+    int i;
+
+    i = tam;
+    while((i > 1) && (v[i/2].prioridade < v[i].prioridade))
+    {
+        comparacoes+=2;
+        troca_pacientes(&v[i/2], &v[i]);
+        trocas++;
+        i=i/2;
+    }
+}
+
+void Heapfy (int tam, struct paciente v[]) 
+{
+    int i;
+
+    for (i = 2; i <= tam; i++) 
+        InsereHeap(i, v);
+}
+
+int ChecaHeap(int tam, struct paciente v[])
+{
+    int i;
+    
+    for (i = 2; i <= tam; i++)
+    {
+        if (v[i].prioridade > v[i/2].prioridade)
+            return (0);
+    }
+    return (1);
+}
+
+void RemoveHeap(int *tam, struct paciente v[], struct paciente alvo)
+{
+    int i;
+
+    if (*tam <= 0) 
+        return;
+    
+    i = 1;
+    while (i <= *tam && (strcmp(v[i].nome, alvo.nome) != 0 || v[i].prioridade != alvo.prioridade))
+        i++;
+
+    if (i > *tam) 
+        return;
+
+    v[i] = v[*tam];
+    (*tam)--;
+
+    if (*tam < 1)
+        return; 
+
+    if (ChecaHeap(*tam, v) == 0)
+        Heapfy(*tam, v);
+}
+
+
+
+void ImprimeHeap(int tam, struct paciente v[]) 
+{
+    int i;
+
+    for (i = 1; i <= tam; i++)
+        printf("%s (prioridade %d)\n", v[i].nome, v[i].prioridade);
+}
+
+void SacodeHeap(int tam, struct paciente v[]) 
+{
+    int i;
+    i = 2;
+
+    while (i <= tam) 
+    {
+        comparacoes++;
+        if (i < tam) 
+        {
+            comparacoes++;
+            if (v[i].prioridade < v[i+1].prioridade)
+                i++;
+        }
+
+        comparacoes++;
+        if (v[i/2].prioridade >= v[i].prioridade)
+            break;
+        
+        troca_pacientes(&v[i/2], &v[i]);
+        trocas++;
+        i*=2;
+    }
+}
+
+void HeapSort(int tam, struct paciente v[]) 
+{
+    int i;
+
+    Heapfy(tam, v);
+    for (i = tam; i > 1; i--)
+    {
+        troca_pacientes(&v[i], &v[1]);
+        trocas++;
+        SacodeHeap(i-1, v);
+    }
+}
+
+void AlteraHeap(int tam, struct paciente v[], int posicao, int prioridade) 
+{
+    if ((v == NULL) || (posicao < 0) || (posicao >= tam))
+        return;
+
+    v[posicao].prioridade = prioridade;
+
+    if (ChecaHeap(tam, v) == 0)
+        Heapfy(tam, v);
+}
+
+//nao sei se pode :) mas foi o unico jeito q achei
+int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int capacidade_fila) 
+{
+    if (*tam + 1 > capacidade_fila) 
+        return(0);
+    
+    (*tam) ++;
+    
+    v[*tam] = novo;                   
+    InsereHeap(*tam, v); 
+
+    return(1);
+}
+
+/*---------------------------------------------------------------------*/
+
 int main()
 {
-    int caminho, tamanho_vetor = 1024;
+    int caminho, tamanho_vetor = 1024, ordem, tamanho_fila = 1000;
+    struct paciente novo, chamado;
+    struct paciente fila[1001];
     int v[tamanho_vetor+1]; //nossos algoritmos de ordenação manipulam a partir de v[1]
     int copia_quick[tamanho_vetor+1], copia_select[tamanho_vetor+1], copia_heap[tamanho_vetor+1]; //sera
 
@@ -263,6 +419,7 @@ int main()
     if(caminho == 1)
     {
         printf("Você entrou no menu do pronto socorro Heap or Quick.\n");
+        InicHeap(tamanho_fila, fila);
         /*As operações que devem ser disponibilizadas incluem: 
         InicHeap, InsereHeap, RemoveHeap, Heapfy, ChecaHeap, ImprimeHeap, HeapSort 
         (entre outras que forem necessárias). O sistema deve permitir que a 
@@ -279,7 +436,61 @@ int main()
         printf("Tecle \"4\" para ordenar os pacientes na fila, conforme a prioridade.\n");
         //printf("Tecle \"5\" para heapficar a fila.\n");
         printf("Tecle \"5\" para alterar a prioridade de paciente");
+        printf(">>");
+        scanf("%d", &ordem);
+        printf("\n");
+        if(ordem == 1)
+        {
+            int imprime;
+            /*Cadastro de novo paciente*/
+            printf("Digite o nome do paciente: ");
+            scanf("%s", novo.nome);
+            printf("\n");
+            printf("Digite a prioridade de %s: ", novo.nome);
+            scanf("%d", &novo.prioridade);
+            printf("\n");
 
+            if((InserirPaciente(novo, fila, &tamanho_fila, tamanho_fila)) == 1)
+                printf("Fila atualizada!\n");
+            else
+                printf("Fila nao atualizada, tente novamente.\n");
+
+            printf("Deseja imprimir a fila?");
+            scanf("%d", &imprime);
+            if(imprime == 1)
+                ImprimeHeap(tamanho_fila, fila);
+        }
+        else if(ordem == 2)
+        {
+            int imprime;
+            /*Chamar prox paciente na fila*/
+            printf("Digite o nome do paciente a ser removido: ");
+            scanf("%s", chamado.nome);
+            printf("\n");
+            printf("Digite a prioridade de %s: ", chamado.nome);
+            scanf("%d", &chamado.prioridade);
+
+            RemoveHeap(&tamanho_fila, fila, chamado);
+
+            printf("Fila atualizada!\n");
+            printf("Deseja imprimir a fila?");
+            scanf("%d", &imprime);
+            if(imprime == 1)
+                ImprimeHeap(tamanho_fila, fila);
+
+        }
+        //else if(ordem == 3)
+        //{
+
+        //}
+        //else if(ordem == 4)
+        //{
+
+        //}
+        //else
+        //{
+
+        //}
 
     }
     else if (caminho == 2)
@@ -295,7 +506,7 @@ int main()
         printf(">>");
         CriaVetor(v);
         printf("Vetor original:\n");
-        ImprimeVetor(tamanho_vetor, v);
+        ImprimeVetor_vetor(tamanho_vetor, v);
         printf("\n");
 
         GeraCopias(v, tamanho_vetor, copia_heap, copia_quick, copia_select);
@@ -312,6 +523,7 @@ int main()
         printf("---------------------------------------------\n");
         /*--------------------------------------*/
         printf("\n");
+
         /*Ordenacao por Select Sort---------------*/
         printf("Ordenação por Select Sort:\n");
         comparacoes = 0;
@@ -325,11 +537,12 @@ int main()
         printf("---------------------------------------------\n");
         /*--------------------------------------*/
         printf("\n");
+
         /*Ordenacao por Heap Sort---------------*/
         printf("Ordenação por Heap Sort:\n");
         comparacoes = 0;
         trocas = 0;
-        HeapSort(tamanho_vetor, copia_heap);
+        HeapSort_vetor(tamanho_vetor, copia_heap);
         //printf("Vetor ordenado por Heap Sort:\n");
         //ImprimeVetor(tamanho_vetor, copia_heap);
         printf("\n");

@@ -80,32 +80,49 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
     }
     else if (pivo == vetor[dir]) 
     {   
-        comparacoes++;
+        comparacoes+=2;
         troca(&vetor[esq], &vetor[dir]);
         trocas++;
     }
+    else
+    {
+        comparacoes+=2;
+    }
+
     pivo = vetor[esq];
     i = esq;
     j = dir;
 
     while (i < j)
     {
+        //comparacoes++;
         while (i < dir && vetor[i] <= pivo) 
         { 
             i++;
-            comparacoes++;
+            comparacoes+=2;
         }
+        if(i < dir && vetor[i] > pivo)
+            comparacoes+=2;
+        else if (i >= dir)
+            comparacoes++;
         while (j > esq && vetor[j]  > pivo) 
         {    
             j--;
-            comparacoes++;
+            comparacoes+=2;
         }
+        if(j > esq && vetor[i] > pivo)
+            comparacoes+=2;
+        else if (i <= esq)
+            comparacoes++;
+
+        comparacoes++;
         if (i < j)
         {
             troca(&vetor[i], &vetor[j]);
             trocas++;
         }
     }
+    comparacoes+=(j-i+1);
 
     troca(&vetor[esq], &vetor[j]);
     trocas++;
@@ -124,6 +141,7 @@ void QuickSort(int vetor[], int esq, int dir)
         QuickSort(vetor, esq, pos_pivo-1);
         QuickSort(vetor, pos_pivo+1, dir);
     }
+    //comparacoes++;
 }
 /*---------------------------------------------------------------------*/
 
@@ -140,6 +158,7 @@ void InsereHeap(int tam, int v[])
         trocas++;
         i=i/2;
     }
+    
 }
 
 void Heapfy (int tam, int v[]) 
@@ -148,6 +167,8 @@ void Heapfy (int tam, int v[])
 
     for (i = 2; i <= tam; i++) 
         InsereHeap(i, v);
+
+    comparacoes+=(tam);
 
     //printf("Comparacoes no HeapFy: %d\n", comparacoes);
     //printf("Trocas no Heapfy: %d\n", trocas);
@@ -161,22 +182,31 @@ void SacodeHeap(int tam, int v[])
 
     while (i <= tam) 
     {
-        comparacoes++;
-        if (i < tam && v[i]< v[i+1])
+        //comparacoes++;
+        //if (i < tam && v[i]< v[i+1])
+        //{
+            //i++;
+            //comparacoes+=2; //se contar comparar i<j, mas acho q sao so indices do vetor
+        //}
+
+        comparacoes++; 
+        if (i < tam) 
         {
-            i++;
-            comparacoes+=2; //se contar comparar i<j, mas acho q sao so indices do vetor
+            comparacoes++; 
+            if (v[i] < v[i+1]) 
+            {
+                i++;
+            }
         }
 
+        comparacoes++;
         if (v[i/2] >= v[i])
-        { 
-            comparacoes++;
             break;
-        }
         
         troca(&v[i/2], &v[i]);
         trocas++;
     }
+    comparacoes+=(tam);
 }
 
 void HeapSort(int tam, int v[]) 
@@ -186,10 +216,12 @@ void HeapSort(int tam, int v[])
     Heapfy(tam, v);
     for (i = tam; i > 1; i--)
     {
+
         troca(&v[i], &v[1]);
         trocas++;
         SacodeHeap(i-1, v);
     }
+    comparacoes+=tam;
 }
 
 /*-----------------------Função imprime vetor--------------------------*/
@@ -303,6 +335,43 @@ int main()
 
     return (0);
 }
+
+
+/*int main()
+{
+    int n = 20, metodo;
+    int v[21] = {
+        0, 10, 5, 3, 1, 1, 1, 1, 2, 1, 1, 1, 5, 2, 1, 1, 1, 2, 1, 1, 1
+      };
+
+      printf("\nVetor original:\n");
+      ImprimeVetor(n, v);
+  
+      printf("\nEscolha o método:\n");
+      printf("1 - Selection Sort\n");
+      printf("2 - Quick Sort\n");
+      printf("3 - Heap Sort\n");
+      printf("-> ");
+      scanf("%d", &metodo);
+  
+      comparacoes = 0;
+      trocas = 0;
+  
+      if (metodo == 1)
+          SelectSort(n, v);
+      else if (metodo == 2)
+          QuickSort(v, 1, n);
+      else if(metodo == 3)
+          HeapSort(n, v);
+  
+      printf("\nVetor ordenado:\n");
+      ImprimeVetor(n, v);
+  
+      printf("\nComparações: %lld\n", comparacoes);
+      printf("Trocas: %lld\n", trocas);
+  
+      return (0);
+}*/
 
 
 
