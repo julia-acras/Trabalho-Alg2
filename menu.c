@@ -397,7 +397,7 @@ int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int cap
 
 int main()
 {
-    int caminho, tamanho_vetor = 1024, ordem, tamanho_fila = 1000;
+    int caminho, tamanho_vetor = 1024, ordem, tamanho_fila = 0, capacidade_fila = 1000;
     struct paciente novo, chamado;
     struct paciente fila[1001];
     int v[tamanho_vetor+1]; //nossos algoritmos de ordenação manipulam a partir de v[1]
@@ -436,6 +436,7 @@ int main()
         printf("Tecle \"4\" para ordenar os pacientes na fila, conforme a prioridade.\n");
         //printf("Tecle \"5\" para heapficar a fila.\n");
         printf("Tecle \"5\" para alterar a prioridade de paciente");
+        printf("\n");
         printf(">>");
         scanf("%d", &ordem);
         printf("\n");
@@ -450,15 +451,22 @@ int main()
             scanf("%d", &novo.prioridade);
             printf("\n");
 
-            if((InserirPaciente(novo, fila, &tamanho_fila, tamanho_fila)) == 1)
-                printf("Fila atualizada!\n");
+            if((InserirPaciente(novo, fila, &tamanho_fila, capacidade_fila)) == 1)
+                printf("Fila atualizada! Quantidade de pessoas na fila: %d\n", tamanho_fila);
             else
                 printf("Fila nao atualizada, tente novamente.\n");
 
-            printf("Deseja imprimir a fila?");
+            printf("Deseja imprimir a fila?\n");
+            printf("1 - SIM\n");
+            printf("2 - NÃO\n");
             scanf("%d", &imprime);
             if(imprime == 1)
+            {
+                printf(">>Fila: \n");
                 ImprimeHeap(tamanho_fila, fila);
+            }
+            if(imprime == 2)
+                printf("Sessão Finalizada.\n");
         }
         else if(ordem == 2)
         {
@@ -476,15 +484,20 @@ int main()
             printf("Deseja imprimir a fila?");
             scanf("%d", &imprime);
             if(imprime == 1)
+            {
+                printf(">>Fila: \n");
                 ImprimeHeap(tamanho_fila, fila);
+            }
 
         }
-        //else if(ordem == 3)
-        //{
-
-        //}
-        //else if(ordem == 4)
-        //{
+        else if(ordem == 3)
+        {
+            //para imprimir os pacientes na fila
+            printf(">>Fila: \n");
+            ImprimeHeap(tamanho_fila, fila);
+        }
+        else if(ordem == 4)
+        {
 
         //}
         //else
