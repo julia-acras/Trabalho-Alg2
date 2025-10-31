@@ -21,16 +21,240 @@ e trocas de elemento de lugar.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+long long comparacoes;
+long long trocas;
+
+/*---------------------Função de troca de inteiros--------------------*/
+void troca(int *a, int *b)
+{
+    int aux;
+    aux = *a;
+    *a = *b;
+    *b = aux;
+}
+/*---------------------------------------------------------------------*/
+
+/*--------------------------Select Sort--------------------------------*/
+
+/*Complexidade = O(n^2)
+Trocas = n-1*/
+void SelectSort(int tam, int vetor[]) 
+{
+  	int i, j, menor_elemento;
+
+ 	for (i = 1; i < tam; i++) 
+    {
+        comparacoes++;
+ 		menor_elemento = i;
+ 		for (j = i+1 ; j <= tam; j++) 
+        {
+			comparacoes+=2; 
+ 			if (vetor[j] < vetor[menor_elemento])
+                menor_elemento = j;
+ 		}
+ 		troca(&vetor[menor_elemento], &vetor[i]);
+		trocas++;
+ 	}
+    if(i == tam)
+        comparacoes++;
+}
+/*---------------------------------------------------------------------*/
+
+
+
+/*-------------------------Quick Sort (pivo mediana)-------------------*/
+int mediana(int a, int b, int c) 
+{
+    if ((a >= b && a <= c) || (a <= b && a >= c))
+        return (a);
+    if ((b >= a && b <= c) || (b <= a && b >= c))
+        return (b);
+
+    return (c);
+}
+
+void particao(int vetor[], int esq, int dir, int *pos_pivo)
+{   
+    int i, j, pivo, meio;
+
+    meio = esq + (dir - esq) / 2;
+    pivo = mediana(vetor[esq], vetor[meio], vetor[dir]);
+
+    if (pivo == vetor[meio])
+    {
+        comparacoes++;
+        troca(&vetor[esq], &vetor[meio]);
+        trocas++;
+    }
+    else if (pivo == vetor[dir]) 
+    {   
+        comparacoes++;
+        troca(&vetor[esq], &vetor[dir]);
+        trocas++;
+    }
+    pivo = vetor[esq];
+    i = esq;
+    j = dir;
+
+    while (i < j)
+    {
+        while (i < dir && vetor[i] <= pivo) 
+        { 
+            i++;
+            comparacoes++;
+        }
+        while (j > esq && vetor[j]  > pivo) 
+        {    
+            j--;
+            comparacoes++;
+        }
+        if (i < j)
+        {
+            troca(&vetor[i], &vetor[j]);
+            trocas++;
+        }
+    }
+
+    troca(&vetor[esq], &vetor[j]);
+    trocas++;
+    *pos_pivo = j;
+}
+
+
+
+void QuickSort(int vetor[], int esq, int dir)
+{
+    int pos_pivo;
+    if(esq < dir)
+    {
+        comparacoes++;
+        particao(vetor, esq, dir, &pos_pivo);
+        QuickSort(vetor, esq, pos_pivo-1);
+        QuickSort(vetor, pos_pivo+1, dir);
+    }
+}
+/*---------------------------------------------------------------------*/
+
+/*-------------------------Funções para Heap Sort----------------------*/
+void InsereHeap(int tam, int v[])
+{
+    int i;
+
+    i = tam;
+    while((i > 1) && (v[i/2]< v[i]))
+    {
+        comparacoes+=2;
+        troca(&v[i/2], &v[i]);
+        trocas++;
+        i=i/2;
+    }
+}
+
+void Heapfy (int tam, int v[]) 
+{
+    int i;
+
+    for (i = 2; i <= tam; i++) 
+        InsereHeap(i, v);
+
+    //printf("Comparacoes no HeapFy: %d\n", comparacoes);
+    //printf("Trocas no Heapfy: %d\n", trocas);
+
+}
+
+void SacodeHeap(int tam, int v[]) 
+{
+    int i;
+    i = 2;
+
+    while (i <= tam) 
+    {
+        comparacoes++;
+        if (i < tam) 
+        {
+            comparacoes++;
+            if (v[i] < v[i+1])
+                i++;
+        }
+
+        comparacoes++;
+        if (v[i/2] >= v[i])
+            break;
+        
+        troca(&v[i/2], &v[i]);
+        trocas++;
+
+        i*=2;
+    }
+}
+
+void HeapSort(int tam, int v[]) 
+{
+    int i;
+
+    Heapfy(tam, v);
+    for (i = tam; i > 1; i--)
+    {
+        troca(&v[i], &v[1]);
+        trocas++;
+        SacodeHeap(i-1, v);
+    }
+}
+
+/*-----------------------Função imprime vetor--------------------------*/
+void ImprimeVetor(int tam, int v[])
+{
+    int i;
+
+    for(i = 1; i <= tam; i++)
+        printf("%d ", v[i]);
+    printf("\n");
+}
+/*---------------------------------------------------------------------*/
+
+/*-------------------Área de espaço para criar vetor-------------------*/
+long aleat (long min, long max)
+{
+  return((rand() % (max - min + 1)) + min);
+}
+
+void CriaVetor(int v[]) 
+{
+    int i; 
+
+	for (i = 1; i <= 1024; i++) 
+		v[i] = aleat(0,2048);
+}
+/*---------------------------------------------------------------------*/
+
+/*---------------------------Copiar vetor------------------------------*/
+void GeraCopias(int base[], int tam, int copia_heap[], int copia_quick[], int copia_select[])
+{
+    int i;
+    for (i = 1; i <= tam; i++) 
+    {
+        copia_heap[i] = base[i];
+        copia_quick[i] = base[i];
+        copia_select[i] = base[i];
+    }
+}
+/*---------------------------------------------------------------------*/
+
 int main()
 {
-    int caminho;
-    printf("MENU PRONTO SOCORRO HEAP OR QUICK:\n");
+    int caminho, tamanho_vetor = 1024;
+    int v[tamanho_vetor+1]; //nossos algoritmos de ordenação manipulam a partir de v[1]
+    int copia_quick[tamanho_vetor+1], copia_select[tamanho_vetor+1], copia_heap[tamanho_vetor+1]; //sera
+
+    printf("MENU PRONTO SOCORRO \"HEAP OR QUICK\":\n");
     printf("ALERTA: Somente aperte botões sugeridos pelo menu.\n");
 	printf("Se você apertar alguma tecla errada, REINICIE O PROGRAMA!\n");
 	printf("\n");
 
     /*---Escolha de qual caminho seguir---*/
-    printf("Escolha qual caminho seguir:\n");
+    printf("Tecle \"1\" para acessar o menu hospitalar.\n");
+    printf("Tecle \"2\" para acessar a área de ordenação de vetores.\n");
     printf("1 - Menu Pronto Socorro ""Heap or Quick\n");
     printf("2 - Ordenação de vetor com números aleatórios\n");
     printf(">>");
@@ -39,10 +263,80 @@ int main()
     if(caminho == 1)
     {
         printf("Você entrou no menu do pronto socorro Heap or Quick.\n");
+        /*As operações que devem ser disponibilizadas incluem: 
+        InicHeap, InsereHeap, RemoveHeap, Heapfy, ChecaHeap, ImprimeHeap, HeapSort 
+        (entre outras que forem necessárias). O sistema deve permitir que a 
+        Enfermeira Chefe cadastre os pacientes que chegam à UPA, que chame o próximo 
+        que vai ser atendido (removendo do Heap, RemoveHeap), que imprima todos na sala 
+        de espera, que ordene todos os pacientes de acordo com sua prioridade. 
+        Além disso, a Enfermeira Chefe costuma passear pela sala de espera monitorando 
+        os pacientes e pode atualizar a prioridade de algum paciente que piorou ou melhorou (AlteraHeap). 
+        A qualquer momento deve ser possível imprimir o Heap.*/
+        //printf("Tecle \"1\" para iniciar uma fila de espera.\n");
+        printf("Tecle \"1\" para cadastrar novo paciente na fila.\n");
+        printf("Tecle \"2\" para chamar próximo paciente da fila.\n");
+        printf("Tecle \"3\" para imprimir os pacientes na fila.\n");
+        printf("Tecle \"4\" para ordenar os pacientes na fila, conforme a prioridade.\n");
+        //printf("Tecle \"5\" para heapficar a fila.\n");
+        printf("Tecle \"5\" para alterar a prioridade de paciente");
+
+
     }
     else if (caminho == 2)
     {  
         printf("Você entrou na área de ordenação de vetor.\n");
+
+        /*Faça uma opção no menu para gerar um vetor de números aleatórios com 1024
+         elementos e mostre a comparação do HeapSort com o QuickSort e o SelectSort. 
+         Qual foi melhor na prática? Para cada algoritmo mostre o número de comparações 
+         e trocas de elemento de lugar.*/
+
+        printf("Gerando vetor aleatório de 1024 elementos!\n");
+        printf(">>");
+        CriaVetor(v);
+        printf("Vetor original:\n");
+        ImprimeVetor(tamanho_vetor, v);
+        printf("\n");
+
+        GeraCopias(v, tamanho_vetor, copia_heap, copia_quick, copia_select);
+        /*Ordenacao por Quick Sort---------------*/
+        printf("Ordenação por Quick Sort:\n");
+        comparacoes = 0;
+        trocas = 0;
+        QuickSort(copia_quick, 1, tamanho_vetor);
+        //printf("Vetor ordenado por Quick Sort:\n");
+        //ImprimeVetor(tamanho_vetor, copia_quick);
+        printf("\n");
+        printf("Comparações Quick Sort: %lld\n", comparacoes);
+        printf("Trocas Quick Sort: %lld\n", trocas);
+        printf("---------------------------------------------\n");
+        /*--------------------------------------*/
+        printf("\n");
+        /*Ordenacao por Select Sort---------------*/
+        printf("Ordenação por Select Sort:\n");
+        comparacoes = 0;
+        trocas = 0;
+        SelectSort(tamanho_vetor, copia_select);
+        //printf("Vetor ordenado por Select Sort:\n");
+        //ImprimeVetor(tamanho_vetor, copia_select);
+        printf("\n");
+        printf("Comparações Select Sort: %lld\n", comparacoes);
+        printf("Trocas Select Sort: %lld\n", trocas);
+        printf("---------------------------------------------\n");
+        /*--------------------------------------*/
+        printf("\n");
+        /*Ordenacao por Heap Sort---------------*/
+        printf("Ordenação por Heap Sort:\n");
+        comparacoes = 0;
+        trocas = 0;
+        HeapSort(tamanho_vetor, copia_heap);
+        //printf("Vetor ordenado por Heap Sort:\n");
+        //ImprimeVetor(tamanho_vetor, copia_heap);
+        printf("\n");
+        printf("Comparações Heap Sort: %lld\n", comparacoes);
+        printf("Trocas Heap Sort: %lld\n", trocas);
+        printf("---------------------------------------------\n");
+        /*--------------------------------------*/
     }
 
 

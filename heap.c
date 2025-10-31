@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "heap.h"
 
 /* Ideia fazer um vetor que vamos manipular com heap.
     Vetor de structs pacientes - cada elemento do vetor é uma struct paciente
@@ -15,11 +16,11 @@ long long comparacoes;
 long long trocas;
 
 /*Cada paciente tem cadastrado nome e prioridade.*/
-struct paciente
+/*struct paciente
 {
     char nome[100];
     int prioridade;
-};
+};*/
 
 void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
 {
@@ -116,20 +117,20 @@ void SacodeHeap(int tam, struct paciente v[])
     while (i <= tam) 
     {
         comparacoes++;
-        if (i < tam && v[i].prioridade < v[i+1].prioridade)
+        if (i < tam) 
         {
-            i++;
-            comparacoes+=2;
+            comparacoes++;
+            if (v[i].prioridade < v[i+1].prioridade)
+                i++;
         }
 
+        comparacoes++;
         if (v[i/2].prioridade >= v[i].prioridade)
-        { 
-            comparacoes++;
             break;
-        }
         
         troca_pacientes(&v[i/2], &v[i]);
         trocas++;
+        i*=2;
     }
 }
 
@@ -184,6 +185,9 @@ int main()
     strcpy(fila[2].nome, "duda");
     strcpy(fila[3].nome, "elias");
 
+    Heapfy(tam, fila);
+    ImprimeHeap(tam, fila);
+    printf("\n");
     HeapSort(tam, fila);
     ImprimeHeap(tam, fila);
     printf("\n");
