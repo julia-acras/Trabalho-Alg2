@@ -11,8 +11,6 @@ struct paciente
     int prioridade;
 };
 
-void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2);
-
 void InicHeap(int tam, struct paciente v[]);
 
 void InsereHeap(int tam, struct paciente v[]);

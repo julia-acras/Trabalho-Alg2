@@ -46,7 +46,7 @@ void InsereHeap(int tam, struct paciente v[])
     int i;
 
     i = tam;
-    while((i > 1) && (v[i/2].prioridade < v[i].prioridade))
+    while((i > 1) && (v[i/2].prioridade > v[i].prioridade))
     {
         comparacoes+=2;
         troca_pacientes(&v[i/2], &v[i]);
@@ -75,21 +75,10 @@ int ChecaHeap(int tam, struct paciente v[])
     return (1);
 }
 
-void RemoveHeap(int *tam, struct paciente v[], struct paciente alvo)
+void RemoveHeap(int *tam, struct paciente v[])
 {
-    int i;
 
-    if (*tam <= 0) 
-        return;
-    
-    i = 1;
-    while (i <= *tam && (strcmp(v[i].nome, alvo.nome) != 0 || v[i].prioridade != alvo.prioridade))
-        i++;
-
-    if (i > *tam) 
-        return;
-
-    v[i] = v[*tam];
+    v[1] = v[*tam];
     (*tam)--;
 
     if (*tam < 1)
@@ -98,8 +87,6 @@ void RemoveHeap(int *tam, struct paciente v[], struct paciente alvo)
     if (ChecaHeap(*tam, v) == 0)
         Heapfy(*tam, v);
 }
-
-
 
 void ImprimeHeap(int tam, struct paciente v[]) 
 {
@@ -120,12 +107,12 @@ void SacodeHeap(int tam, struct paciente v[])
         if (i < tam) 
         {
             comparacoes++;
-            if (v[i].prioridade < v[i+1].prioridade)
+            if (v[i].prioridade > v[i+1].prioridade)
                 i++;
         }
 
         comparacoes++;
-        if (v[i/2].prioridade >= v[i].prioridade)
+        if (v[i/2].prioridade <= v[i].prioridade)
             break;
         
         troca_pacientes(&v[i/2], &v[i]);
@@ -156,52 +143,4 @@ void AlteraHeap(int tam, struct paciente v[], int posicao, int prioridade)
 
     if (ChecaHeap(tam, v) == 0)
         Heapfy(tam, v);
-}
-
-//nao sei se pode :) mas foi o unico jeito q achei
-int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int capacidade_fila) 
-{
-    if (*tam + 1 > capacidade_fila) 
-        return(0);
-    
-    (*tam) ++;
-    
-    v[*tam] = novo;                   
-    InsereHeap(*tam, v);               
-    return(1);
-}
-
-int main()
-{
-    int tam;
-    tam = 3;
-    struct paciente fila[100];
-    InicHeap(tam, fila);
-    printf("testando heap\n");
-    fila[1].prioridade = 99;
-    fila[2].prioridade = 2;
-    fila[3].prioridade = 59;
-    strcpy(fila[1].nome, "julia");
-    strcpy(fila[2].nome, "duda");
-    strcpy(fila[3].nome, "elias");
-
-    Heapfy(tam, fila);
-    ImprimeHeap(tam, fila);
-    printf("\n");
-    HeapSort(tam, fila);
-    ImprimeHeap(tam, fila);
-    printf("\n");
-
-    struct paciente novo; //pensar jeito melhor - por causa do menu
-    novo.prioridade = 37;
-    strcpy(novo.nome, "isadora");
-    if(InserirPaciente(novo, fila, &tam, 100) == 1)
-        ImprimeHeap(tam, fila);
-    printf("\n");
-
-    AlteraHeap(tam, fila, 2, 56);
-
-    RemoveHeap(&tam, fila, fila[2]);
-    ImprimeHeap(tam, fila);
-    return(0);
 }
