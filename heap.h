@@ -21,7 +21,7 @@ void Heapfy (int tam, struct paciente v[]);
 
 int ChecaHeap(int tam, struct paciente v[]);
 
-void RemoveHeap(int *tam, struct paciente v[], struct paciente alvo);
+void RemoveHeap(int *tam, struct paciente v[]);
 
 void ImprimeHeap(int tam, struct paciente v[]);
 
