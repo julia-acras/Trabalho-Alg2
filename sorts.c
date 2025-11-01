@@ -50,6 +50,7 @@ void SelectSort(int tam, int vetor[])
     if(i == tam)
         comparacoes++;
 }
+
 /*---------------------------------------------------------------------*/
 
 
@@ -72,46 +73,47 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
     meio = esq + (dir - esq) / 2;
     pivo = mediana(vetor[esq], vetor[meio], vetor[dir]);
 
+    comparacoes++;
     if (pivo == vetor[meio])
     {
-        comparacoes++;
         troca(&vetor[esq], &vetor[meio]);
         trocas++;
     }
-    else if (pivo == vetor[dir]) 
-    {   
-        comparacoes+=2;
-        troca(&vetor[esq], &vetor[dir]);
-        trocas++;
-    }
-    else
+    else 
     {
-        comparacoes+=2;
+        comparacoes++;
+        if (pivo == vetor[dir]) 
+        {
+            troca(&vetor[esq], &vetor[dir]);
+            trocas++;
+        }
     }
-
     pivo = vetor[esq];
     i = esq;
     j = dir;
 
     while (i < j)
     {
-        //comparacoes++;
+        comparacoes++;
         while (i < dir && vetor[i] <= pivo) 
         { 
             i++;
             comparacoes+=2;
         }
         if(i < dir && vetor[i] > pivo)
-            comparacoes+=2;
+            comparacoes++;
+
         else if (i >= dir)
             comparacoes++;
+
         while (j > esq && vetor[j]  > pivo) 
         {    
             j--;
             comparacoes+=2;
         }
-        if(j > esq && vetor[i] > pivo)
-            comparacoes+=2;
+        
+        if(j > esq)
+            comparacoes++;
         else if (i <= esq)
             comparacoes++;
 
@@ -236,7 +238,7 @@ void ImprimeVetor(int tam, int v[])
 /*---------------------------------------------------------------------*/
 
 /*--------Função de Comparar Algoritmos--------------------------------*/
-void compara_algoritmos(int n, const int base[]) {
+/*void compara_algoritmos(int n, const int base[]) {
 
     // cópias
     int a[1025], b[1025], c[1025];
@@ -281,7 +283,7 @@ void compara_algoritmos(int n, const int base[]) {
     }
 
     printf("\nMelhor na pratica: %s\n", melhor);
-}
+}*/
 /*---------------------------------------------------------------------*/
 
 /*-------------------Área de espaço para criar vetor-------------------*/

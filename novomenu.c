@@ -80,16 +80,19 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
 
     while (i < j)
     {
-        while (i < dir && vetor[i] <= pivo) 
+        while (i < dir)
         { 
-            i++;
-            comparacoes++;
+            if(vetor[i] <= pivo)
+                i++;
+            comparacoes+=2;
         }
         while (j > esq && vetor[j]  > pivo) 
         {    
-            j--;
-            comparacoes++;
+            if(vetor[j]  > pivo)
+                j--;
+            comparacoes+=2;
         }
+        comparacoes++;
         if (i < j)
         {
             troca(&vetor[i], &vetor[j]);
@@ -381,8 +384,8 @@ int main()
     /*---Escolha de qual caminho seguir---*/
     printf("Tecle \"1\" para acessar o menu hospitalar.\n");
     printf("Tecle \"2\" para acessar a área de ordenação de vetores.\n");
-    printf("1 - Menu Pronto Socorro ""Heap or Quick\n");
-    printf("2 - Ordenação de vetor com números aleatórios\n");
+    //printf("1 - Menu Pronto Socorro ""Heap or Quick\n");
+    //printf("2 - Ordenação de vetor com números aleatórios\n");
     printf(">>");
     scanf("%d", &caminho);
     printf("\n");
