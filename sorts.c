@@ -117,7 +117,6 @@ void QuickSort(int vetor[], int esq, int dir)
     int pos_pivo;
     if(esq < dir)
     {
-        comparacoes++;
         particao(vetor, esq, dir, &pos_pivo);
         QuickSort(vetor, esq, pos_pivo-1);
         QuickSort(vetor, pos_pivo+1, dir);
@@ -148,8 +147,6 @@ void Heapfy (int tam, int v[])
 
     for (i = 2; i <= tam; i++) 
         InsereHeap(i, v);
-
-    comparacoes+=(tam);
 
     //printf("Comparacoes no HeapFy: %d\n", comparacoes);
     //printf("Trocas no Heapfy: %d\n", trocas);
