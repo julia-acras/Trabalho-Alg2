@@ -36,19 +36,18 @@ void SelectSort(int tam, int vetor[])
 
  	for (i = 1; i < tam; i++) 
     {
-        comparacoes++;
  		menor_elemento = i;
  		for (j = i+1 ; j <= tam; j++) 
         {
-			comparacoes+=2; 
+			comparacoes++; 
  			if (vetor[j] < vetor[menor_elemento])
                 menor_elemento = j;
  		}
- 		troca(&vetor[menor_elemento], &vetor[i]);
-		trocas++;
+        if (menor_elemento != i){
+ 		    troca(&vetor[menor_elemento], &vetor[i]);
+		    trocas++;
+        }
  	}
-    if(i == tam)
-        comparacoes++;
 }
 
 /*---------------------------------------------------------------------*/
