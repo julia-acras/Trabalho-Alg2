@@ -82,7 +82,7 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
             trocas++;
         }
     pivo = vetor[esq];
-    i = esq;
+    i = esq + 1;
     j = dir;
 
     while (i < j)
@@ -95,7 +95,7 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
         while (j >= esq+1 && vetor[j]  > pivo) 
         {    
             j--;
-            comparacoes+=2;
+            comparacoes++;
         }
         comparacoes++;
         if (i < j)
