@@ -199,7 +199,6 @@ void HeapSort(int tam, int v[])
         trocas++;
         SacodeHeap(i-1, v);
     }
-    comparacoes+=tam;
 }
 
 /*-----------------------Função imprime vetor--------------------------*/
