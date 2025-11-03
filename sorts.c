@@ -72,50 +72,31 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
     meio = esq + (dir - esq) / 2;
     pivo = mediana(vetor[esq], vetor[meio], vetor[dir]);
 
-    comparacoes++;
     if (pivo == vetor[meio])
     {
         troca(&vetor[esq], &vetor[meio]);
         trocas++;
     }
-    else 
-    {
-        comparacoes++;
-        if (pivo == vetor[dir]) 
-        {
+    else if (pivo == vetor[dir]) {
             troca(&vetor[esq], &vetor[dir]);
             trocas++;
         }
-    }
     pivo = vetor[esq];
     i = esq;
     j = dir;
 
     while (i < j)
     {
-        comparacoes++;
-        while (i < dir && vetor[i] <= pivo) 
+        while (i <= dir && vetor[i] <= pivo) 
         { 
             i++;
-            comparacoes+=2;
+            comparacoes++;
         }
-        if(i < dir && vetor[i] > pivo)
-            comparacoes++;
-
-        else if (i >= dir)
-            comparacoes++;
-
-        while (j > esq && vetor[j]  > pivo) 
+        while (j >= esq+1 && vetor[j]  > pivo) 
         {    
             j--;
             comparacoes+=2;
         }
-        
-        if(j > esq)
-            comparacoes++;
-        else if (i <= esq)
-            comparacoes++;
-
         comparacoes++;
         if (i < j)
         {
@@ -123,7 +104,6 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
             trocas++;
         }
     }
-    comparacoes+=(j-i+1);
 
     troca(&vetor[esq], &vetor[j]);
     trocas++;
