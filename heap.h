@@ -28,6 +28,6 @@ void SacodeHeap(int tam, struct paciente v[]);
 
 void HeapSort(int tam, struct paciente v[]);
 
-void AlteraHeap(int tam, struct paciente v[], int posicao, int prioridade);
+int AlteraHeap(int tam, struct paciente v[], char nome[100], int prioridade); 
 
 #endif

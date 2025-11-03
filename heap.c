@@ -134,13 +134,18 @@ void HeapSort(int tam, struct paciente v[])
     }
 }
 
-void AlteraHeap(int tam, struct paciente v[], int posicao, int prioridade) 
+int AlteraHeap(int tam, struct paciente v[], char nome[100], int prioridade) 
 {
-    if ((v == NULL) || (posicao < 0) || (posicao >= tam))
-        return;
+    if (v == NULL)
+        return (0);
 
-    v[posicao].prioridade = prioridade;
-
-    if (ChecaHeap(tam, v) == 0)
-        Heapfy(tam, v);
+    for (int i = 1; i <= tam; i++)
+    {
+        if ((strcmp(v[i].nome, nome) == 0))
+        {
+            v[i].prioridade = prioridade;
+            return (1);
+        }
+    }
+    return(0);
 }

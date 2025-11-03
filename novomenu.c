@@ -379,25 +379,16 @@ int main()
             else
             {   
                 struct paciente alterar;
-                int achou;
             //para alterar a prioridade de paciente
                 printf("Digite o nome do paciente a ser alterado: ");
                 scanf("%s", alterar.nome);
                 printf("\n");
                 printf("Digite a nova prioridade de %s: ", alterar.nome);
                 scanf("%d", &alterar.prioridade);
-                achou = 0;
-                for (int i = 1; i <= tamanho_fila; i++)
-                {
-                    if ((strcmp(fila[i].nome, alterar.nome) == 0))
-                    {
-                        achou = 1;
-                        AlteraHeap(tamanho_fila, fila, i, alterar.prioridade);
-                    }
-                }
-                if(achou == 0)
-                    printf("Paciente não encontrado.");
-                if(achou == 1)
+                printf("\n");
+                if(AlteraHeap(tamanho_fila, fila, alterar.nome, alterar.prioridade) == 0)
+                    printf("Paciente não encontrado.\n");
+                else if(AlteraHeap(tamanho_fila, fila, alterar.nome, alterar.prioridade) == 1)
                 {
                     printf("Prioridade alterada. Deseja ver a fila?\n");
                     printf("1 - SIM\n");
