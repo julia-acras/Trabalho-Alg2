@@ -97,7 +97,6 @@ void particao(int vetor[], int esq, int dir, int *pos_pivo)
             j--;
             comparacoes++;
         }
-        comparacoes++;
         if (i < j)
         {
             troca(&vetor[i], &vetor[j]);
