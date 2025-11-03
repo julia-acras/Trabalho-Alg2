@@ -23,8 +23,8 @@ e trocas de elemento de lugar.*/
 #include <string.h>
 #include "heap.h"
 
-long long comparacoes;
-long long trocas;
+//long long comparacoes;
+//long long trocas;
 
 /*---------------------Função de troca de inteiros--------------------*/
 void troca(int *a, int *b)

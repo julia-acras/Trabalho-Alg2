@@ -1,7 +1,8 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-
+extern long long comparacoes;
+extern long long trocas;
 
 
 /*Cada paciente tem cadastrado nome e prioridade.*/

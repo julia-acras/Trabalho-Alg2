@@ -12,8 +12,8 @@
 o número de comparações e trocas de elemento de posição que foram executadas.
 */
 
-long long comparacoes;
-long long trocas;
+long long comparacoes = 0;
+long long trocas = 0;
 
 /*Cada paciente tem cadastrado nome e prioridade.*/
 /*struct paciente
