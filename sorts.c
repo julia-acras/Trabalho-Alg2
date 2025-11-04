@@ -52,8 +52,6 @@ void SelectSort(int tam, int vetor[])
 
 /*---------------------------------------------------------------------*/
 
-
-
 /*-------------------------Quick Sort (pivo mediana)-------------------*/
 int mediana(int a, int b, int c) 
 {
@@ -182,6 +180,8 @@ void SacodeHeap(int tam, int v[])
         
         troca(&v[i/2], &v[i]);
         trocas++;
+        
+        i*=2;
     }
     comparacoes+=(tam);
 }

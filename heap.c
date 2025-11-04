@@ -3,24 +3,9 @@
 #include <string.h>
 #include "heap.h"
 
-/* Ideia fazer um vetor que vamos manipular com heap.
-    Vetor de structs pacientes - cada elemento do vetor é uma struct paciente
-    *InicHeap, InsereHeap, RemoveHeap, Heapfy, ChecaHeap, ImprimeHeap, HeapSort, AlteraHeap
-*/
-
-/*Quando executar as funções Heapfy e HeapSort deve ser reportado 
-o número de comparações e trocas de elemento de posição que foram executadas.
-*/
 
 long long comparacoes = 0;
 long long trocas = 0;
-
-/*Cada paciente tem cadastrado nome e prioridade.*/
-/*struct paciente
-{
-    char nome[100];
-    int prioridade;
-};*/
 
 void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
 {
