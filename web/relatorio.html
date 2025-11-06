@@ -41,18 +41,18 @@ criamos a struct paciente.
 
 Ideias para cada arquivo: 
 
-Heap.c e Heap.h: Como o Heap é um TAD, vimos a necessidade de criar um arquivo 
+<u>Heap.c e Heap.h</u>: Como o Heap é um TAD, vimos a necessidade de criar um arquivo 
 header com a struct paciente declarada e todas as funções essenciais para o trabalho que 
 abordam o TAD heap. Assim, no heap.c implementamos cada função. 
 
 Esses arquivos foram criados com o intuito de facilitar na manipulação de vetor com 
 pacientes no menu.c. 
 
-Menu.c: Nossa ideia principal para esse arquivo é criar o menu, que será visto pela 
+<u>Menu.c</u>: Nossa ideia principal para esse arquivo é criar o menu, que será visto pela 
 enfermeira.
 No início do menu, haverá a escolha de qual dos dois caminhos seguir.
 
-Sorts.c: Ali implementamos as funções de ordenação para o vetor de 1024 inteiros 
+<u>Sorts.c</u> Ali implementamos as funções de ordenação para o vetor de 1024 inteiros 
 aleatórios: 
 Funções essas: QuickSort, HeapSort e SelectSort. 
 
@@ -70,7 +70,7 @@ elementos struct paciente.
 
  
 
--InsereHeap: 
+-<u>InsereHeap</u> 
 
 A função insere e sobe na árvore o último elemento do vetor na posição correta de 
 acordo com a estrutura de max-heap. 
@@ -81,7 +81,7 @@ função troca_pacientes) e o índice utilizado sobe na árvore (i = i/2).
 Dessa forma, vamos subindo o elemento até a posição correta conforme a estrutura.
   
 
--Heapfy:  
+-<u>Heapfy</u>: 
 
  Constrói a estrutura de heap (max-heap) a partir de um vetor desordenado. 
 
@@ -89,20 +89,20 @@ Dessa forma, vamos subindo o elemento até a posição correta conforme a estrut
 da fila) inserindo (com a funcao InsereHeap) os elementos do heap, de maneira que o vetor 
 seja construindo obedecendo a estrutura desejada. 
 
--ImprimeHeap: 
+-<u>ImprimeHeap</u>: 
 
  Percorre todos os pacientes do vetor e imprime o nome e a prioridade: 
 
  ex: João (Prioridade 10) 
 
--ChecaHeap: 
+-<u>ChecaHeap</u>: 
 
  Analisa um vetor e verifica por laço e comparações se o vetor obedece o 
 comportamento de um max-heap. 
 
  Retorna 0, em caso negativo e 1 em casos positivos. 
 
--SacodeHeap: 
+-<u>SacodeHeap</u> 
 
  O funcionamento dessa função baseia-se na comparação de cada nó da árvore 
 (v[i/2]) com o maior de v[i] e v[i+1], já que v[i/2], no max heap, precisa ser maior que esses 
@@ -111,7 +111,7 @@ todos os nós da árvore heap.
 
  A ideia é "sacudir” a árvore até que o elemento caia na sua posição correta. 
 
--HeapSort 
+-<u>HeapSort</u>:
 
 Primeiro aplicamos Heapfy para montar o max-heap. 
 
@@ -162,7 +162,7 @@ No entanto, notamos que em um caso (primeiro caminho do menu) trabalhamos com st
 pacientes, e no outro com vetores de inteiros. Então adaptamos, novamente, as funções do 
 heap para se adequarem aos vetores aleatórios de 1024 elementos inteiros. 
 
--SelectSort: 
+-<u>SelectSort</u>: 
 
  O Select Sort funciona escolhendo o menor elemento do vetor e colocando ele na 
 posição certa a cada passada do laço. 
@@ -181,7 +181,7 @@ encontrado. Assim, a cada passada o menor valor restante vai para o início, at�
 totalmente ordenado. 
 <img src="imgs/img6.png" alt="SelectSort" width="400">
 
--QuickSort: 
+-<u>QuickSort</u>: 
 
  O nosso algoritmo de QuickSort usa como pivô o elemento que é a mediana entre o 
 primeiro, meio e último elemento. 
@@ -209,12 +209,12 @@ Para encerrar a função, após os índices i e j se cruzarem trocamos o v[j] co
 para assim j se torne a nova posição do pivô após a partição. 
 <img src="imgs/img8.png" alt="particao" width="400">
 
-3.QuickSort: Função recursiva que chamamos os dois sub-vetores que formam as 
+3.<u>QuickSort</u>: Função recursiva que chamamos os dois sub-vetores que formam as 
 metades (antes do pivô e depois do pivô) até que o vetor esteja ordenado. 
 <img src="imgs/img9.png" alt="QuickSort" width="400">
  
 
--HeapSort_vetor: Para todas as funções que compõem o HeapSort, adaptamos as funções feitas para vetor de struct paciente, para agora serem 
+-<u>HeapSort_vetor</u>: Para todas as funções que compõem o HeapSort, adaptamos as funções feitas para vetor de struct paciente, para agora serem 
 utilizadas em vetores de inteiros. 
 Diferença dos parâmetros:
 <img src="imgs/img10.png" alt="QuickSort" width="400">
@@ -232,13 +232,13 @@ Implementamos as funções relacionadas à estrutura de Heap.
 
 Para finalizar a estrutura do heap implementamos as funções:  
 
-- InicHeap: 
+- <u>InicHeap</u>: 
 
  Aqui damos início ao vetor que vai determinar a nossa fila, então percorremos do 
 índice 1 até o índice “tam” o vetor, atribuindo uma string e uma prioridade (ambas vazias) 
 para cada elemento. 
 
-- RemoveHeap: 
+-<u>RemoveHeap</u>: 
 
  Primeiro verificamos se a nossa fila está vazia, porque se sim não há o que remover. 
 
@@ -250,7 +250,7 @@ fim da fila e com a diminuição de tamanho foi descartado do vetor.
  Também, caso a fila não tenha ficado vazia com a saída do paciente, chamamos 
 SacodeHeap para reajustar o novo primeiro elemento da fila. 
 
--AlteraHeap: 
+-<u>AlteraHeap</u>: 
 
  
  Essa foi a função que mais tivemos dificuldades para implementar, o intuito dela é 
@@ -310,7 +310,7 @@ ficavam no início, arrumamos então nosso HeapSort para ordenar em ordem cresce
 
 Aqui também criamos a função InserirPaciente. 
 
--InserirPaciente: 
+-<u>InserirPaciente</u>: 
 
 1- verifica se há capacidade na fila (determinamos que a fila do pronto socorro pode 
 ter no máximo 1000 pacientes). 
@@ -392,17 +392,17 @@ professor.
 Pacientes com maior prioridade ficam no início.
 Funções que alteramos: 
 
--SacodeHeap: para que a árvore seja sacudida de forma que construa min-heap alteramos o sinal de igualdade em:
+-<u>SacodeHeap</u>: para que a árvore seja sacudida de forma que construa min-heap alteramos o sinal de igualdade em:
     "if (v[i].prioridade > v[i+1].prioridade)
     ...
     if "(v[i/2].prioridade <= v[i].prioridade)"
 
 
--InsereHeap: para que a função insira na árvore o último elemento do vetor na posição correta de 
+-<u>InsereHeap</u>: para que a função insira na árvore o último elemento do vetor na posição correta de 
 acordo com a estrutura de min-heap, alteramos o sinal de igualdade em:
     "while((i > 1) && (v[i/2].prioridade > v[i].prioridade))"
 
--ChecaHeap: para verificar se é min-heap.
+-<u>ChecaHeap</u>: para verificar se é min-heap.
     invertemos o sinal de igualdade em: 
     "if (v[i].prioridade > v[i/2].prioridade)"
 
