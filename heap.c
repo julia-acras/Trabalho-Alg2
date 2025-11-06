@@ -3,10 +3,12 @@
 #include <string.h>
 #include "heap.h"
 
+// Critério: menor 'prioridade' = maior urgência (heap de mínimos).
 
 long long comparacoes = 0;
 long long trocas = 0;
 
+//Troca o conteúdo de dois pacientes.
 void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
 {
     struct paciente aux;
@@ -16,6 +18,7 @@ void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
     *paciente2 = aux;
 }
 
+//Zera nomes e prioridades de v[1..tam].
 void InicHeap(int tam, struct paciente v[]) 
 {
     for (int i = 1; i <= tam; i++) 
@@ -25,7 +28,7 @@ void InicHeap(int tam, struct paciente v[])
     }
 }
 
-
+//InsereHeap: "sobe" o elemento recém-colocado em v[tam] até restaurar o min-heap.
 void InsereHeap(int tam, struct paciente v[])
 {
     int i;
@@ -40,6 +43,7 @@ void InsereHeap(int tam, struct paciente v[])
     }
 }
 
+//Constrói um min-heap em v[1..tam] por inserções sucessivas.
 void Heapfy (int tam, struct paciente v[]) 
 {
     int i;
@@ -48,6 +52,7 @@ void Heapfy (int tam, struct paciente v[])
         InsereHeap(i, v);
 }
 
+//Verifica se v[1..tam] satisfaz min-heap (filho >= pai).
 int ChecaHeap(int tam, struct paciente v[])
 {
     int i;
@@ -60,6 +65,7 @@ int ChecaHeap(int tam, struct paciente v[])
     return (1);
 }
 
+//Remove a raiz (v[1]) substituindo por v[*tam] e reduz tam.
 void RemoveHeap(int *tam, struct paciente v[])
 {
 
@@ -73,6 +79,7 @@ void RemoveHeap(int *tam, struct paciente v[])
         Heapfy(*tam, v);
 }
 
+//Lista os pacientes em ordem de array.
 void ImprimeHeap(int tam, struct paciente v[]) 
 {
     int i;
@@ -81,6 +88,7 @@ void ImprimeHeap(int tam, struct paciente v[])
         printf("%s (prioridade %d)\n", v[i].nome, v[i].prioridade);
 }
 
+//Desce a raiz escolhendo o menor filho.
 void SacodeHeap(int tam, struct paciente v[]) 
 {
     int i;
@@ -105,6 +113,7 @@ void SacodeHeap(int tam, struct paciente v[])
     }
 }
 
+//Ordena v[1..tam] em ordem crescente de 'prioridade' (menores primeiro).
 void HeapSort(int tam, struct paciente v[]) 
 {
     int i;
@@ -118,6 +127,7 @@ void HeapSort(int tam, struct paciente v[])
     }
 }
 
+//Busca por nome e altera sua prioridade.
 int AlteraHeap(int tam, struct paciente v[], char nome[100], int prioridade) 
 {
     if (v == NULL)
