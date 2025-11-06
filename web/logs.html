@@ -37,6 +37,7 @@
     h4, h2 {
       margin: 0 0 12px 0;
       color: var(--text);
+      margin-top: 40px;
     }
     p { color: var(--muted); margin: 0 0 16px 0; }
 
@@ -49,20 +50,53 @@
       border-radius:10px;
       box-shadow: var(--shadow);
     }
+    .txts iframe {
+        box-shadow: var(--shadow);
+        margin-bottom: 20px;
+    }
+    a {
+  color: #c60050;
+  font-weight: 600;
+  text-decoration: none;
+}
   </style>
 </head>
 <body>
   <div class="section">
     <div class="paper">
-      <h4>Logs dos Testes de Ordenação</h4>
-      <p>As imagens abaixo mostram os resultados obtidos durante os testes com HeapSort, QuickSort e SelectionSort.</p>
 
+        <p>Os arquivos abaixo mostram o conteúdo final das implementações em C utilizadas nos testes.</p>
+
+        <div class="txts">
+        <h3>heap.c</h3>
+         <a href="heap.c.txt" target="_blank">Abrir heap.c.txt</a>
+        <iframe 
+            src="heap.c.txt" 
+            title="Arquivo heap.c"
+            style="width:100%;min-height:300px;border:2px solid var(--border);border-radius:12px;background:#f3f4f6;">
+        </iframe>
+
+        <h3>menu.c</h3>
+        <a href="menu.c.txt" target="_blank">Abrir menu.c.txt</a>
+        <iframe 
+            src="menu.c.txt" 
+            title="Arquivo menu.c"
+            style="width:100%;min-height:300px;border:2px solid var(--border);border-radius:12px;background:#f3f4f6;">
+        </iframe>
+        </div>
+
+      <p>As imagens abaixo mostram os resultados obtidos durante os testes.</p>
+
+        <h4> Testes com SelectionSort</h4>
       <img src="imgs/imgslogs/photo_4927365269034831010_y.jpg" alt="Log 1">
       <img src="imgs/imgslogs/photo_4927365269034831011_y.jpg" alt="Log 2">
+      <h4> Testes com HeapSort</h4>
       <img src="imgs/imgslogs/photo_4927365269034831012_w.jpg" alt="Log 3">
       <img src="imgs/imgslogs/photo_4927365269034831014_w.jpg" alt="Log 4">
+      <h4> Testes com QuickSort</h4>
       <img src="imgs/imgslogs/photo_4927365269034831015_w.jpg" alt="Log 5">
       <img src="imgs/imgslogs/photo_4927365269034831016_w.jpg" alt="Log 6">
+      <h4> Testes com a fila</h4>
       <img src="imgs/imgslogs/photo_4927365269034831017_x.jpg" alt="Log 7">
       <img src="imgs/imgslogs/photo_4927365269034831018_x.jpg" alt="Log 8">
       <img src="imgs/imgslogs/photo_4927365269034831019_x.jpg" alt="Log 9">
