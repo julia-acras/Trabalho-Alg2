@@ -1,4 +1,3 @@
-
 CC     = gcc
 CFLAGS = -Wall -Wextra -std=c11
 
@@ -6,7 +5,6 @@ BIN    = menu-heap-or-quick
 
 SRC    = menu.c heap.c
 OBJ    = $(SRC:.c=.o)
-
 
 $(BIN): $(OBJ)
 	$(CC) $(OBJ) -o $(BIN)
@@ -18,7 +16,6 @@ $(BIN): $(OBJ)
 
 run: $(BIN)
 	./$(BIN)
-
 
 clean:
 	rm -f $(OBJ) $(BIN)
