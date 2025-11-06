@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "heap.h"
 
 //long long comparacoes;
@@ -17,28 +18,25 @@ void troca(int *a, int *b)
 /*---------------------------------------------------------------------*/
 
 /*--------------------------Select Sort--------------------------------*/
-
-/*Complexidade = O(n^2)
-Trocas = n-1*/
 void SelectSort(int tam, int vetor[]) 
 {
   	int i, j, menor_elemento;
 
  	for (i = 1; i < tam; i++) 
     {
-        comparacoes++;
+        //comparacoes++;
  		menor_elemento = i;
  		for (j = i+1 ; j <= tam; j++) 
         {
-			comparacoes+=2; 
+			comparacoes++; 
  			if (vetor[j] < vetor[menor_elemento])
                 menor_elemento = j;
  		}
  		troca(&vetor[menor_elemento], &vetor[i]);
 		trocas++;
  	}
-    if(i == tam)
-        comparacoes++;
+    //if(i == tam)
+        //comparacoes++;
 }
 /*---------------------------------------------------------------------*/
 
@@ -122,7 +120,7 @@ void InsereHeap_vetor(int tam, int v[])
     i = tam;
     while((i > 1) && (v[i/2]< v[i]))
     {
-        comparacoes+=2;
+        comparacoes++;
         troca(&v[i/2], &v[i]);
         trocas++;
         i=i/2;
@@ -145,7 +143,6 @@ void SacodeHeap_vetor(int tam, int v[])
 
     while (i <= tam) 
     {
-        comparacoes++; 
         if (i < tam) 
         {
             comparacoes++; 
@@ -164,7 +161,6 @@ void SacodeHeap_vetor(int tam, int v[])
         
         i*=2;
     }
-    comparacoes+=(tam);
 }
 
 void HeapSort_vetor(int tam, int v[]) 
@@ -233,11 +229,11 @@ int InserirPaciente(struct paciente novo, struct paciente v[], int *tam, int cap
 
     return(1);
 }
-
 /*---------------------------------------------------------------------*/
 
 int main()
 {
+    srand(time(NULL));
     int caminho, tamanho_vetor = 1024, ordem, tamanho_fila = 0, capacidade_fila = 1000, imprime;
     struct paciente novo;
     struct paciente fila[1001];
@@ -321,6 +317,7 @@ int main()
                 printf("\n");
 
                 RemoveHeap(&tamanho_fila, fila);
+                HeapSort(tamanho_fila, fila);
 
                 printf("Fila atualizada!\n");
                 printf("\n");
@@ -427,10 +424,13 @@ int main()
 
         GeraCopias(v, tamanho_vetor, copia_heap, copia_quick, copia_select);
         /*Ordenacao por Quick Sort---------------*/
-        printf("Ordenação por Quick Sort:\n");
         comparacoes = 0;
         trocas = 0;
         QuickSort(copia_quick, 1, tamanho_vetor);
+        printf("Vetor ordenado:\n");
+        ImprimeVetor_vetor(tamanho_vetor, copia_quick);
+        printf("\n");
+        printf("Ordenação por Quick Sort:\n");
         //printf("Vetor ordenado por Quick Sort:\n");
         //ImprimeVetor(tamanho_vetor, copia_quick);
         printf("\n");

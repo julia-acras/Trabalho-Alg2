@@ -12,12 +12,12 @@
 </head>
 <body>
   <pre>
-<strong>17/10</strong> – Início do trabalho 
+<strong><span style="color: #e75480;">17/10</span></strong> – Início do trabalho 
 
 Realizamos apenas a leitura inicial do enunciado para compreender os objetivos e os 
 requisitos do projeto. 
 
-<strong>20/10</strong> – Planejamento inicial 
+<strong><span style="color: #e75480;">20/10</span></strong> – Planejamento inicial 
 
 Definimos os tópicos principais e listamos as tarefas necessárias para o desenvolvimento. 
 
@@ -30,18 +30,14 @@ Percebemos que nosso menu teria de ter 2 caminhos:
 Também levantamos dúvidas sobre a estrutura do trabalho e sobre o funcionamento 
 esperado dos algoritmos. 
 
-<strong>21/10</strong> – Criação do repositório 
+<strong><span style="color: #e75480;">21/10</span></strong> – Criação do repositório 
 
 Criamos um repositório no GitHub, permitindo que cada uma pudesse trabalhar em sua 
 própria máquina. Nesse dia, criamos também os arquivos principais do projeto — menu.c, 
 sorts.c, heap.h e heap.c — e implementamos algumas funções básicas que já sabíamos e 
-também a struct paciente. 
+criamos a struct paciente. 
 
-A struct paciente contém dois campos: 
-
--char nome[100] 
-
--prioridade inteiro. 
+<img src="imgs/img1.png" alt="Struct Paciente" width="400">
 
 Ideias para cada arquivo: 
 
@@ -50,15 +46,17 @@ header com a struct paciente declarada e todas as funções essenciais para o tr
 abordam o TAD heap. Assim, no heap.c implementamos cada função. 
 
 Esses arquivos foram criados com o intuito de facilitar na manipulação de vetor com 
-pacientes no menu.c 
+pacientes no menu.c. 
 
 Menu.c: Nossa ideia principal para esse arquivo é criar o menu, que será visto pela 
-enfermeira. 
+enfermeira.
+No início do menu, haverá a escolha de qual dos dois caminhos seguir.
 
 Sorts.c: Ali implementamos as funções de ordenação para o vetor de 1024 inteiros 
-aleatórios: QuickSort, HeapSort e SelectSort. 
+aleatórios: 
+Funções essas: QuickSort, HeapSort e SelectSort. 
 
-Conforme trabalhamos no projeto, nos próximos dias, não vimos mais a utilidade desse 
+*Conforme trabalhamos no projeto, nos próximos dias, não vimos mais a utilidade desse 
 arquivo. 
 
  
@@ -95,7 +93,7 @@ seja construindo obedecendo a estrutura desejada.
 
  Percorre todos os pacientes do vetor e imprime o nome e a prioridade: 
 
- ex: João Pprioridade 10) 
+ ex: João (Prioridade 10) 
 
 -ChecaHeap: 
 
@@ -107,7 +105,7 @@ comportamento de um max-heap.
 -SacodeHeap: 
 
  O funcionamento dessa função baseia-se na comparação de cada nó da árvore 
-(v[i/2]) com o maior de v[i] e v[(i+1], já que v[i/2], no max heap, precisa ser maior que esses 
+(v[i/2]) com o maior de v[i] e v[i+1], já que v[i/2], no max heap, precisa ser maior que esses 
 dois. Dessa forma, trocamos quando v[i]&gt;v[i/2] e vamos multiplicando i*=2 para que cubra 
 todos os nós da árvore heap. 
 
@@ -129,13 +127,21 @@ Também para a função aleat, responsável por gerar números aleatórios em um
 trabalho, nos inspiramos na disciplina de Programação 1 que no primeiro trabalho tivemos 
 que dominá-la. 
 
+<img src="imgs/img2.png" alt="Função aleat" width="400">
+Função aleat
+
+<img src="imgs/img3.png" alt="srand" width="300">
+Semente randomica para gerar vetores diferentes a cada execução.
+
+
 Por último, no dia, vimos a necessidade de criar uma função troca_pacientes que troca os 
 pacientes de posição, para otimizar o código de outras funções como InsereHeap, 
 SacodeHeap e HeapSort. 
+<img src="imgs/img4.png" alt="troca_pacientes" width="500">
 
  
 
-<strong>24/10</strong> – Implementação inicial dos algoritmos de ordenação 
+<strong><span style="color: #e75480;">24/10</span></strong> – Implementação inicial dos algoritmos de ordenação 
 
 Implementamos novas funções de ordenação (sorts) e começamos a analisar o número de 
 comparações realizadas em cada algoritmo. Nesse processo, surgiram dúvidas, pois os 
@@ -143,9 +149,11 @@ resultados não estavam condizentes com o esperado:
 
 Primeiro criamos variáveis globais, comparações e trocas do tipo long long para usarmos 
 em todas as funções de ordenação. 
+<img src="imgs/img5.png" alt="comparacoes/trocas" width="300">
 
 Primeiro implementamos o SelectSort e depois de algumas tentativas corrigimos a soma de 
 comparações na função. 
+
 
 Implementamos o QuickSort com o pivô sendo a mediana e copiamos as funções do heap.c 
 para implementarmos o HeapSort. 
@@ -156,7 +164,7 @@ heap para se adequarem aos vetores aleatórios de 1024 elementos inteiros.
 
 -SelectSort: 
 
- O Selection Sort funciona escolhendo o menor elemento do vetor e colocando ele na 
+ O Select Sort funciona escolhendo o menor elemento do vetor e colocando ele na 
 posição certa a cada passada do laço. 
 
 O algoritmo é composto de dois laços: 
@@ -171,6 +179,7 @@ quando haja um v[j] &lt; v[menor_elemento] o valor do índice menor_elemento é 
   Depois que o laço interno termina,trocamos o elemento da posição i e o menor 
 encontrado. Assim, a cada passada o menor valor restante vai para o início, até o vetor ficar 
 totalmente ordenado. 
+<img src="imgs/img6.png" alt="SelectSort" width="400">
 
 -QuickSort: 
 
@@ -181,13 +190,13 @@ primeiro, meio e último elemento.
 
  1. mediana: Verifica qual valor, entre os 3 passados, está no meio. Não pode ser o 
 maior e nem o menor. O retorno da função é o elemento do meio. 
-
+<img src="imgs/img7.png" alt="mediana" width="400">
  
 
  2.partição: usamos o retorno da função mediana como pivô. 
  Primeiro, coloco o pivô na posição inicial (esq) do atual sub-vetor. Em seguida, criamos 
 dois índices: i, que começa logo à direita do pivô (esq + 1) e  j, que começa no final (dir). 
- 
+
 
 O i avança da esquerda para a direita enquanto encontrar valores menores ou iguais 
 ao pivô, e o j recua da direita para a esquerda enquanto encontrar valores maiores que o 
@@ -198,24 +207,26 @@ esquerda e tudo que é maior fique à direita.
 
 Para encerrar a função, após os índices i e j se cruzarem trocamos o v[j] com o pivô, 
 para assim j se torne a nova posição do pivô após a partição. 
+<img src="imgs/img8.png" alt="particao" width="400">
 
 3.QuickSort: Função recursiva que chamamos os dois sub-vetores que formam as 
 metades (antes do pivô e depois do pivô) até que o vetor esteja ordenado. 
-
+<img src="imgs/img9.png" alt="QuickSort" width="400">
  
 
--HeapSort_vetores:  
-
- Adaptamos as funções feitas para vetor de struct paciente, para agora serem 
+-HeapSort_vetor: Para todas as funções que compõem o HeapSort, adaptamos as funções feitas para vetor de struct paciente, para agora serem 
 utilizadas em vetores de inteiros. 
+Diferença dos parâmetros:
+<img src="imgs/img10.png" alt="QuickSort" width="400">
+<img src="imgs/img11.png" alt="QuickSort" width="400">
 
-<strong>26/10</strong> – Aprendizado complementar com GitHub Pages 
+<strong><span style="color: #e75480;">26/10</span></strong> – Aprendizado complementar com GitHub Pages 
 
 Criamos um repositório separado apenas para testar e aprender a usar o GitHub Pages. 
 Essa etapa foi importante para nos familiarizarmos com HTML e entender como 
 desenvolveríamos o site principal do trabalho mais adiante. 
 
-<strong>28/10</strong> – Desenvolvimento de Heap 
+<strong><span style="color: #e75480;">28/10</span></strong> – Desenvolvimento de Heap 
 
 Implementamos as funções relacionadas à estrutura de Heap. 
 
@@ -242,7 +253,6 @@ SacodeHeap para reajustar o novo primeiro elemento da fila.
 -AlteraHeap: 
 
  
-
  Essa foi a função que mais tivemos dificuldades para implementar, o intuito dela é 
 alterar a prioridade de um paciente. 
 
@@ -255,16 +265,23 @@ A função strcmp retorna 0 caso as strings sejam iguais e usamos isso ao nosso 
 pedimos para que a enfermeira digite o nome do paciente a ser alterado e percorremos o 
 vetor até encontrar, por meio do nome, esse paciente. 
 
+<img src="imgs/img12.png" alt="AlteraHeap" width="400">
+Uso da função strcmp.
+
 Assim que o paciente é encontrado, atribuímos a nova prioridade a ele, visto que passamos 
 como parâmetros da função, além da fila, o nome fornecido e a nova prioridade. 
 
-<strong>29/10 </strong> – Testes e ajustes no Heap 
+<strong><span style="color: #e75480;">29/10</span></strong> – Testes e ajustes no Heap 
 
-Testamos todas as funções do Heap, corrigindo erros à medida que surgiam. Além disso, 
-elaboramos enunciados-base para os algoritmos de ordenação e criamos um primeiro 
+Testamos todas as funções do Heap, corrigindo erros à medida que surgiam. 
+Além disso, elaboramos enunciados-base para os algoritmos de ordenação e criamos um primeiro 
 modelo de menu principal do programa. 
 
-<strong>30/10</strong> – Comparação de algoritmos 
+<img src="imgs/img13.png" alt="menu" width="400">
+Começo do menu, onde o usuário escolhe o caminho.
+
+
+<strong><span style="color: #e75480;">30/10</span></strong> – Comparação de algoritmos 
 
 Nesse dia criamos funções e arquivos com intuito de nos auxiliar durante o projeto. 
 
@@ -278,18 +295,22 @@ funcionamento de cada função.
 A partir dessa análise, vimos alguns erros de compilação e determinamos como padrão que 
 nossos vetores se iniciaram em v[1] e nao v[0], assim como vimos em aula. 
 
-<strong>31/10</strong> – Integração e testes do menu 
+<strong><span style="color: #e75480;">31/10</span></strong> – Integração e testes do menu 
 
 Ajustamos o menu principal para permitir a execução e o teste de todas as funcionalidades 
 implementadas juntas. 
+<img src="imgs/img15.png" alt="menu" width="300">
+Cabeçalho menu.c
+
 
 Nesse dia percebemos um detalhe: nosso Heapsort não estava adequado para a fila de 
 pacientes. Ele ordenava em ordem crescente, ou seja os pacientes de menor prioridade 
-ficavam no início, arrumamos então nosso HeapSort para ordenar em ordem crescente. 
+ficavam no início, arrumamos então nosso HeapSort para ordenar em ordem crescente 
+(mas ainda continuamos em dúvida e decidimos tirar na próxima aula com o professor.)
 
 Aqui também criamos a função InserirPaciente. 
 
--Inserir paciente: 
+-InserirPaciente: 
 
 1- verifica se há capacidade na fila (determinamos que a fila do pronto socorro pode 
 ter no máximo 1000 pacientes). 
@@ -297,7 +318,9 @@ ter no máximo 1000 pacientes).
 2- Se há espaço na fila, ele insere o paciente na última posição e depois chama 
 InsereHeap - para manter o paciente em sua ordem correta conforme max-heap. 
 
-<strong>01/11</strong> – Revisão geral e início do site 
+<img src="imgs/img14.png" alt="inserepaciente" width="600">
+
+<strong><span style="color: #e75480;">01/11</span></strong> – Revisão geral e início do site 
 
  
 
@@ -308,8 +331,11 @@ fosse atualizada, ela não era ordenada. Então, a enfermeira chefe poderia cham
 próximo da fila e não necessariamente chamar o paciente de maior prioridade.  
 
 Nesse caso, quando a enfermeira escolher a opção de alterar prioridade ou inserir novo 
-paciente, após a enfermeira chefe fornecer os dados nós ordenamos o vetor de struct 
-pacientes com o HeapSort 
+paciente, após os dados serem fornecidos, nós ordenamos o vetor de struct 
+pacientes com o HeapSort:
+
+<img src="imgs/img16.png" alt="inserepaciente" width="400">
+<img src="imgs/img17.png" alt="inserepaciente" width="400">
 
  
 
@@ -317,56 +343,33 @@ Também começamos a montar o site do trabalho, adicionando a primeira parte do 
 
  
 
-<strong>03/11</strong> – Correção da contagem de comparações 
+<strong><span style="color: #e75480;">03/11</span></strong> – Correção da contagem de comparações 
 
 Identificamos um erro na forma como estávamos contabilizando o número de comparações. 
 Corrigimos essa lógica em todos os algoritmos de ordenação, removendo trechos 
 desnecessários e ajustando a contagem. 
+(A conta final está no print das funções no dia 24/10)
 
-<strong>04/11</strong> – Finalização do menu principal 
+<strong><span style="color: #e75480;">04/11</span></strong> – Finalização do menu principal 
 
 Finalizamos completamente o menu principal, garantindo que todas as opções estivessem 
 funcionando corretamente. 
 
-MENU PRONTO SOCORRO "HEAP OR QUICK": 
+Escolhendo caminho 1 e instruindo para inserir paciente:
+<img src="imgs/img18.png" alt="1 caminho" width="400">
 
-ALERTA: Somente aperte botões sugeridos pelo menu. 
+Nosso menu sempre pergunta se o usuário quer imprimir a fila, assim como exigido no enunciado.
 
-Se você apertar alguma tecla errada, REINICIE O PROGRAMA! 
+Instruindo para remover paciente e imprimir a fila:
+<img src="imgs/img19.png" alt="1 caminho" width="400">
 
- 
-
-Tecle "1" para acessar o menu hospitalar. 
-
-Tecle "2" para acessar a área de ordenação de vetores. 
-
->>1 
-
- 
-
-Você entrou no menu do pronto socorro Heap or Quick. 
-
-Tecle "0" sair do menu. 
-
-Tecle "1" para cadastrar novo paciente na fila. 
-
-Tecle "2" para chamar próximo paciente da fila. 
-
-Tecle "3" para imprimir os pacientes na fila. 
-
-Tecle "4" para ordenar os pacientes na fila, conforme a prioridade. 
-
-Tecle "5" para alterar a prioridade de paciente 
-
->> 
-
+Instruindo para ordenar fila e alterar prioridade de paciente:
+<img src="imgs/img20.png" alt="1 caminho" width="400">
  
 
 A primeira parte do nosso menu é feita de um laço, quando a enfermeira tecla “0” para sair 
 do menu, a variável saída se torna verdadeira (saída = 1) e o laço do menu hospitalar é 
 finalizado. 
-
- 
 
 Já quando o usuário decide entrar no segundo caminho, é gerado um vetor de 1024 
 elementos inteiros aleatórios e é apresentado as estatísticas com cada método de 
@@ -376,14 +379,49 @@ Criamos o vetor aleatório, fazemos cópias para cada tipo de ordenação: para 
 comparemos estatísticas dos algoritmos de ordenação sendo que utilizamos diferentes 
 vetores. 
 
- 
+<img src="imgs/img24.png" alt="2 caminho" width="400">
+<img src="imgs/img25.png" alt="2 caminho" width="400">
+<img src="imgs/img26.png" alt="2 caminho" width="400">
 
-<strong>05/11</strong> – Revisão final e testes 
+<strong><span style="color: #e75480;">05/11</span></strong> – Revisão final e testes
 
 Realizamos os últimos ajustes no código com base em dúvidas que tiramos com o 
-professor. Em seguida, executamos e registramos diversos testes para validar o 
+professor. 
+
+1. Ajustamos nosso Heap para min-heap, visto que foi a melhor solução que encontramos para ordenar o vetor em maneira decrescente:
+Pacientes com maior prioridade ficam no início.
+Funções que alteramos: 
+
+-SacodeHeap: para que a árvore seja sacudida de forma que construa min-heap alteramos o sinal de igualdade em:
+    "if (v[i].prioridade > v[i+1].prioridade)
+    ...
+    if "(v[i/2].prioridade <= v[i].prioridade)"
+
+
+-InsereHeap: para que a função insira na árvore o último elemento do vetor na posição correta de 
+acordo com a estrutura de min-heap, alteramos o sinal de igualdade em:
+    "while((i > 1) && (v[i/2].prioridade > v[i].prioridade))"
+
+-ChecaHeap: para verificar se é min-heap.
+    invertemos o sinal de igualdade em: 
+    "if (v[i].prioridade > v[i/2].prioridade)"
+
+Observação: não alteramos o restante das funções do max-heap, consideramos que apenas essas 3 alteram a estrutura do heap. 
+Então, seguimos a mesma lógica executada anteriromente.
+
+2. Também criamos um arquivo makefile para facilitar na compilação
+
+<img src="imgs/img23.png" alt="makefile" width="400">
+
+Em seguida, executamos e registramos diversos testes para validar o 
 funcionamento correto de todas as partes do projeto e adicionamos isso ao site. 
 
-<strong>07/11</strong> - Entrega do Trabalho</pre>
+Após executarmos diversos testes, e analisarmos os vetores decidimos que o QuickSort foi melhor na prática.
+Em geral, a soma de trocas feito pelo QuickSort é quase 1/4 das trocas feitas pelo HeapSort e em 
+comparações o QuickSort tem quase metade das comparações efetuadas pelo HeapSort.
+O SelectSort foi considerado o pior em todos os casos.
+
+
+<strong><span style="color: #e75480;">07/11</span></strong> - Entrega do Trabalho</pre>
 </body>
 </html>

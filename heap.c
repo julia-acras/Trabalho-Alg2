@@ -88,7 +88,6 @@ void SacodeHeap(int tam, struct paciente v[])
 
     while (i <= tam) 
     {
-        comparacoes++;
         if (i < tam) 
         {
             comparacoes++;
