@@ -259,6 +259,8 @@ int main()
     if(caminho == 1)
     {
         printf("Você entrou no menu do pronto socorro Heap or Quick.\n");
+        printf("A prioridade do paciente é relativa a sua urgência!\n");
+        printf("\n");
 
         while (saida == 0)
         {

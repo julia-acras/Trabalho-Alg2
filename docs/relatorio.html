@@ -68,62 +68,76 @@ Funções já implementadas, vistas na disciplina:
 Observação: a implementação dessas funções foi inicialmente pensada e adaptada para um vetor de 
 elementos struct paciente. 
 
- 
+Segue rascunhos de como pensamos no projeto:
+-<u>Funcionamento da fila:</u> Conforme chega pacientes no pronto socorro, a enfermeira os 
+  cadastra e determina a prioridade do paciente.
+  Quão maior a prioridade, mais doente está o paciente.
+
+<img src="imgs/desenho2.jpg" alt="Função aleat" width="400">
+
+-<u>Pensamentos inciais:</u> Como faremos o nosso heap?
+Percebemos, com o conteúdo das aulas que estruturar nosso heap em formato de max-heap,
+ordenaria nosso vetor em ordem crescente e priorizaria os menos doentes.
+
+-<u>MinHeapfy e HeapSort:</u>
+<img src="imgs/desenho1.jpg" alt="Função aleat" width="400">
 
 -<u>InsereHeap</u> 
 
 A função insere e sobe na árvore o último elemento do vetor na posição correta de 
-acordo com a estrutura de max-heap. 
+acordo com a estrutura de min-heap. 
 
-Enquanto v[i/2].prioridade &lt; v[i].prioridade, os dois elementos são trocados (pela 
+Enquanto v[i/2].prioridade > v[i].prioridade, os dois elementos são trocados (pela 
 função troca_pacientes) e o índice utilizado sobe na árvore (i = i/2). 
 
 Dessa forma, vamos subindo o elemento até a posição correta conforme a estrutura.
   
 
--<u>Heapfy</u>: 
+-<u>MinHeapfy</u>: 
 
- Constrói a estrutura de heap (max-heap) a partir de um vetor desordenado. 
+Constrói a estrutura de heap (min-heap) a partir de um vetor desordenado. 
 
- Função composta de um laço for que vai do índice 2 até o índice “tam” (último índice 
+Função composta de um laço for que vai do índice 2 até o índice “tam” (último índice 
 da fila) inserindo (com a funcao InsereHeap) os elementos do heap, de maneira que o vetor 
 seja construindo obedecendo a estrutura desejada. 
 
 -<u>ImprimeHeap</u>: 
 
- Percorre todos os pacientes do vetor e imprime o nome e a prioridade: 
+Percorre todos os pacientes do vetor e imprime o nome e a prioridade: 
 
- ex: João (Prioridade 10) 
+ex: João (Prioridade 10) 
 
 -<u>ChecaHeap</u>: 
 
- Analisa um vetor e verifica por laço e comparações se o vetor obedece o 
-comportamento de um max-heap. 
+Analisa um vetor e verifica por laço e comparações se o vetor obedece o 
+comportamento de um min-heap. 
 
- Retorna 0, em caso negativo e 1 em casos positivos. 
+Retorna 0, em caso negativo e 1 em casos positivos. 
 
 -<u>SacodeHeap</u> 
 
- O funcionamento dessa função baseia-se na comparação de cada nó da árvore 
-(v[i/2]) com o maior de v[i] e v[i+1], já que v[i/2], no max heap, precisa ser maior que esses 
-dois. Dessa forma, trocamos quando v[i]&gt;v[i/2] e vamos multiplicando i*=2 para que cubra 
-todos os nós da árvore heap. 
+O funcionamento dessa função baseia-se na comparação de cada nó da árvore (v[i/2]) 
+com o menor entre v[i] e v[i+1], já que em um min-heap v[i/2] deve ser menor ou igual a ambos.
 
- A ideia é "sacudir” a árvore até que o elemento caia na sua posição correta. 
+Dessa forma, quando v[i/2].prioridade > v[i].prioridade, os dois elementos são trocados 
+(o elemento “desce” na árvore), e o índice é multiplicado por 2 (i *= 2) para continuar o 
+processo nos níveis inferiores.
+
+A ideia é “sacudir” a árvore até que o elemento caia na posição correta, restaurando a propriedade de min-heap.
 
 -<u>HeapSort</u>:
 
-Primeiro aplicamos Heapfy para montar o max-heap. 
+Primeiro aplicamos MinHeapfy para montar o min-heap. 
 
-Depois, o maior elemento (no max-heap sempre fica em v[1]) é trocado com o 
-último, para parametro da funcao SacodeHeap, diminuimos o tamanho do nosso vetor. 
-Chamamos SacodeHeap para restaurar o max-heap após a troca. 
+Depois, o menor elemento (no min-heap sempre fica em v[1]) é trocado com o 
+último elemento do vetor. Como parametro da funcao SacodeHeap, diminuimos o tamanho do nosso vetor. 
+Chamamos SacodeHeap para restaurar o min-heap após a troca. 
 
-O processo se repete até o vetor ficar ordenado. 
+O processo se repete até o vetor ficar ordenado em ordem decrescente.
 
- 
 
-Também para a função aleat, responsável por gerar números aleatórios em um certo 
+-<u>Aleat</u>:
+Para a função aleat, responsável por gerar números aleatórios em um certo 
 trabalho, nos inspiramos na disciplina de Programação 1 que no primeiro trabalho tivemos 
 que dominá-la. 
 
@@ -234,26 +248,30 @@ Para finalizar a estrutura do heap implementamos as funções:
 
 - <u>InicHeap</u>: 
 
- Aqui damos início ao vetor que vai determinar a nossa fila, então percorremos do 
+Aqui damos início ao vetor que vai determinar a nossa fila, então percorremos do 
 índice 1 até o índice “tam” o vetor, atribuindo uma string e uma prioridade (ambas vazias) 
 para cada elemento. 
 
 -<u>RemoveHeap</u>: 
 
- Primeiro verificamos se a nossa fila está vazia, porque se sim não há o que remover. 
+Primeiro verificamos se a nossa fila está vazia, porque se sim não há o que remover. 
 
  Como a ideia é que a enfermeira chefe remova o primeiro paciente na fila de 
 prioridade - para ser atendido- colocamos o primeiro paciente na última posição do vetor, 
 mas em seguida subtraímos 1 do tamanho da fila. Desse modo, o paciente foi colocado no 
 fim da fila e com a diminuição de tamanho foi descartado do vetor. 
 
- Também, caso a fila não tenha ficado vazia com a saída do paciente, chamamos 
+Ressaltando que, nosso projeto foi feito com o intuito de que
++prioridade, +doente. 
+Então a enfermeira, quando chamar o paciente e utilizar RemoveHeap, chamará o paciente mais doente (de maior prioridade.)
+
+Também, caso a fila não tenha ficado vazia com a saída do paciente, chamamos 
 SacodeHeap para reajustar o novo primeiro elemento da fila. 
 
 -<u>AlteraHeap</u>: 
 
  
- Essa foi a função que mais tivemos dificuldades para implementar, o intuito dela é 
+Essa foi a função que mais tivemos dificuldades para implementar, o intuito dela é 
 alterar a prioridade de um paciente. 
 
 Como acharíamos o paciente que a enfermeira quer alterar? 
@@ -302,12 +320,6 @@ implementadas juntas.
 <img src="imgs/img15.png" alt="menu" width="300">
 Cabeçalho menu.c
 
-
-Nesse dia percebemos um detalhe: nosso Heapsort não estava adequado para a fila de 
-pacientes. Ele ordenava em ordem crescente, ou seja os pacientes de menor prioridade 
-ficavam no início, arrumamos então nosso HeapSort para ordenar em ordem crescente 
-(mas ainda continuamos em dúvida e decidimos tirar na próxima aula com o professor.)
-
 Aqui também criamos a função InserirPaciente. 
 
 -<u>InserirPaciente</u>: 
@@ -322,8 +334,6 @@ InsereHeap - para manter o paciente em sua ordem correta conforme max-heap.
 
 <strong><span style="color: #e75480;">01/11</span></strong> – Revisão geral e início do site 
 
- 
-
 Revisamos o código e o funcionamento do menu, resolvendo pequenos problemas internos.  
 
 Percebemos que, por exemplo, a cada inserção de um novo paciente por mais que a fila 
@@ -337,11 +347,9 @@ pacientes com o HeapSort:
 <img src="imgs/img16.png" alt="inserepaciente" width="400">
 <img src="imgs/img17.png" alt="inserepaciente" width="400">
 
- 
 
 Também começamos a montar o site do trabalho, adicionando a primeira parte do relatório. 
 
- 
 
 <strong><span style="color: #e75480;">03/11</span></strong> – Correção da contagem de comparações 
 
@@ -385,29 +393,7 @@ vetores.
 
 <strong><span style="color: #e75480;">05/11</span></strong> – Revisão final e testes
 
-Realizamos os últimos ajustes no código com base em dúvidas que tiramos com o 
-professor. 
-
-1. Ajustamos nosso Heap para min-heap, visto que foi a melhor solução que encontramos para ordenar o vetor em maneira decrescente:
-Pacientes com maior prioridade ficam no início.
-Funções que alteramos: 
-
--<u>SacodeHeap</u>: para que a árvore seja sacudida de forma que construa min-heap alteramos o sinal de igualdade em:
-    "if (v[i].prioridade > v[i+1].prioridade)
-    ...
-    if "(v[i/2].prioridade <= v[i].prioridade)"
-
-
--<u>InsereHeap</u>: para que a função insira na árvore o último elemento do vetor na posição correta de 
-acordo com a estrutura de min-heap, alteramos o sinal de igualdade em:
-    "while((i > 1) && (v[i/2].prioridade > v[i].prioridade))"
-
--<u>ChecaHeap</u>: para verificar se é min-heap.
-    invertemos o sinal de igualdade em: 
-    "if (v[i].prioridade > v[i/2].prioridade)"
-
-Observação: não alteramos o restante das funções do max-heap, consideramos que apenas essas 3 alteram a estrutura do heap. 
-Então, seguimos a mesma lógica executada anteriromente.
+Confirmamos com o professor que é possível usar min-heap.
 
 2. Também criamos um arquivo makefile para facilitar na compilação
 

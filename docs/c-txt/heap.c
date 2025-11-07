@@ -3,7 +3,8 @@
 #include <string.h>
 #include "heap.h"
 
-// Critério: menor 'prioridade' = maior urgência (heap de mínimos).
+/*Critério: Min-Heap, para assim ordenarmos de ordem decrescente. 
+Maior prioridade, maior urgência para o paciente.*/
 
 long long comparacoes = 0;
 long long trocas = 0;
@@ -18,7 +19,7 @@ void troca_pacientes(struct paciente *paciente1, struct paciente *paciente2)
     *paciente2 = aux;
 }
 
-//Zera nomes e prioridades de v[1..tam].
+//Inicia fila de prioridade.
 void InicHeap(int tam, struct paciente v[]) 
 {
     for (int i = 1; i <= tam; i++) 
@@ -44,7 +45,7 @@ void InsereHeap(int tam, struct paciente v[])
 }
 
 //Constrói um min-heap em v[1..tam] por inserções sucessivas.
-void Heapfy (int tam, struct paciente v[]) 
+void MinHeapfy (int tam, struct paciente v[]) 
 {
     int i;
 
@@ -76,7 +77,7 @@ void RemoveHeap(int *tam, struct paciente v[])
         return; 
 
     if (ChecaHeap(*tam, v) == 0)
-        Heapfy(*tam, v);
+        MinHeapfy(*tam, v);
 }
 
 //Lista os pacientes em ordem de array.
@@ -113,12 +114,12 @@ void SacodeHeap(int tam, struct paciente v[])
     }
 }
 
-//Ordena v[1..tam] em ordem crescente de 'prioridade' (menores primeiro).
+//Ordena v[1..tam] em ordem decrescente de 'prioridade' (maiores primeiro).
 void HeapSort(int tam, struct paciente v[]) 
 {
     int i;
 
-    Heapfy(tam, v);
+    MinHeapfy(tam, v);
     for (i = tam; i > 1; i--)
     {
         troca_pacientes(&v[i], &v[1]);
